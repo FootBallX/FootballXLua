@@ -21,10 +21,25 @@
 *.app
 
 
+publish/
+
+
 Debug.win32/
 runtime/
 frameworks/runtime-src/proj.win32/Backup/
 frameworks/runtime-src/proj.win32/FootballXLua.v12.suo
 frameworks/runtime-src/proj.win32/UpgradeLog.htm
+
+
+#Android
+frameworks/cocos2d-x/cocos/platform/android/java/bin/
+frameworks/cocos2d-x/cocos/platform/android/java/gen/
+frameworks/cocos2d-x/cocos/platform/android/java/local.properties
+frameworks/runtime-src/proj.android/assets/
+frameworks/runtime-src/proj.android/bin/
+frameworks/runtime-src/proj.android/gen/
+frameworks/runtime-src/proj.android/local.properties
+frameworks/runtime-src/proj.android/obj
+
 
 
