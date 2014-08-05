@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'FootballXLua' target in the 'FootballXLua' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif
