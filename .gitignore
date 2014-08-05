@@ -19,3 +19,12 @@
 *.exe
 *.out
 *.app
+
+
+Debug.win32/
+runtime/
+frameworks/runtime-src/proj.win32/Backup/
+frameworks/runtime-src/proj.win32/FootballXLua.v12.suo
+frameworks/runtime-src/proj.win32/UpgradeLog.htm
+
+
