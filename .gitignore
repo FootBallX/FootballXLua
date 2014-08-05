@@ -1,28 +1,5 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
 
 publish/
-
 
 Debug.win32/
 runtime/
@@ -41,5 +18,26 @@ frameworks/runtime-src/proj.android/gen/
 frameworks/runtime-src/proj.android/local.properties
 frameworks/runtime-src/proj.android/obj
 
+#XCode
+frameworks/cocos2d-x/build/build/
+frameworks/runtime-src/proj.ios_mac/build/
+frameworks/cocos2d-x/cocos/scripting/lua-bindings/proj.ios_mac/build/
+prebuilt/
 
 
+# Exclude temp nibs and swap files
+*~.nib
+*.swp
+
+# Exclude OS X folder attributes
+.DS_Store
+
+# Exclude user-specific XCode 3 and 4 files
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
