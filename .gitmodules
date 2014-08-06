@@ -1,3 +1,0 @@
-[submodule "frameworks/cocos2d-x/external/libpomelo"]
-	path = frameworks/cocos2d-x/external/libpomelo
-	url = https://github.com/559210/libpomelo.git
