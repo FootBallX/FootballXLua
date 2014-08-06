@@ -6,7 +6,10 @@ runtime/
 frameworks/runtime-src/proj.win32/Backup/
 frameworks/runtime-src/proj.win32/FootballXLua.v12.suo
 frameworks/runtime-src/proj.win32/UpgradeLog.htm
-
+frameworks/cocos2d-x/tools/bindings-generator/tools/
+frameworks/cocos2d-x/tools/bindings-generator/libclang/
+*.opensdf
+*.sdf
 
 #Android
 frameworks/cocos2d-x/cocos/platform/android/java/bin/

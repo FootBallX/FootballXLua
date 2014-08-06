@@ -86,23 +86,23 @@ private:
     CCPomeloNotify_*popNotify();
     
     std::map<pc_notify_t*, std::function<void(Node*, void*)> > notify_content;
-    pthread_mutex_t  notify_queue_mutex;
+    std::mutex  notify_queue_mutex;
     std::queue<CCPomeloNotify_*> notify_queue;
     
     std::map<std::string, std::function<void(Node*, void*)> > event_content;
-    pthread_mutex_t  event_queue_mutex;
+	std::mutex  event_queue_mutex;
     std::queue<CCPomeloEvent_*> event_queue;
     
     std::map<pc_request_t*, std::function<void(Node*, void*)> > request_content;
-    pthread_mutex_t  reponse_queue_mutex;
+	std::mutex  reponse_queue_mutex;
     std::queue<CCPomeloReponse_*> reponse_queue;
     
     
-    pthread_mutex_t  connect_mutex;
+	std::mutex  connect_mutex;
     CCPomeloConnect_* connect_content;
     
     
-    pthread_mutex_t  task_count_mutex;
+	std::mutex  task_count_mutex;
     void dispatchRequest();
     void dispatchEvent();
     void dispatchNotify();

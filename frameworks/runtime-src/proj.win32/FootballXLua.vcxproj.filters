@@ -106,6 +106,12 @@
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite_inl.h">
       <Filter>Classes\runtime\protobuf-lite</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\CCPomelo.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CSingleton.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -182,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\wire_format_lite.cc">
       <Filter>Classes\runtime\protobuf-lite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CCPomelo.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
