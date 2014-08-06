@@ -17,6 +17,7 @@ frameworks/runtime-src/proj.android/bin/
 frameworks/runtime-src/proj.android/gen/
 frameworks/runtime-src/proj.android/local.properties
 frameworks/runtime-src/proj.android/obj
+frameworks/runtime-src/proj.android/libs
 
 #XCode
 frameworks/cocos2d-x/build/build/
@@ -41,3 +42,4 @@ prebuilt/
 *.pbxuser
 *.xcworkspace
 xcuserdata
+frameworks/cocos2d-x/v3-deps-5.zip
