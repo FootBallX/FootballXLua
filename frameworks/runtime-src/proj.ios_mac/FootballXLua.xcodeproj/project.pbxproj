@@ -77,6 +77,8 @@
 		50D7C96C17EBBEDF005D0B91 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */; };
 		50D7C96E17EBBEE6005D0B91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96D17EBBEE6005D0B91 /* AppKit.framework */; };
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
+		71370DCE1992661400D99979 /* lua_pomelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71370DCC1992661400D99979 /* lua_pomelo.cpp */; };
+		71370DCF1992661400D99979 /* lua_pomelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71370DCC1992661400D99979 /* lua_pomelo.cpp */; };
 		71454521199216AD0099EA26 /* libjansson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451A199216550099EA26 /* libjansson.a */; };
 		71454522199216AD0099EA26 /* libpomelo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451B199216550099EA26 /* libpomelo.a */; };
 		71454523199216AD0099EA26 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451C199216550099EA26 /* libuv.a */; };
@@ -429,6 +431,8 @@
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		71370DCC1992661400D99979 /* lua_pomelo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_pomelo.cpp; path = ../Classes/LuaBindings/lua_pomelo.cpp; sourceTree = "<group>"; };
+		71370DCD1992661400D99979 /* lua_pomelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_pomelo.h; path = ../Classes/LuaBindings/lua_pomelo.h; sourceTree = "<group>"; };
 		7145451A199216550099EA26 /* libjansson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjansson.a; sourceTree = "<group>"; };
 		7145451B199216550099EA26 /* libpomelo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpomelo.a; sourceTree = "<group>"; };
 		7145451C199216550099EA26 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libuv.a; sourceTree = "<group>"; };
@@ -738,6 +742,15 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		71370DC91992659600D99979 /* LuaBindings */ = {
+			isa = PBXGroup;
+			children = (
+				71370DCC1992661400D99979 /* lua_pomelo.cpp */,
+				71370DCD1992661400D99979 /* lua_pomelo.h */,
+			);
+			name = LuaBindings;
+			sourceTree = "<group>";
+		};
 		71454519199216550099EA26 /* libMac */ = {
 			isa = PBXGroup;
 			children = (
@@ -843,6 +856,7 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				71370DC91992659600D99979 /* LuaBindings */,
 				714545271992280C0099EA26 /* CCPomelo.cpp */,
 				714545281992280C0099EA26 /* CCPomelo.h */,
 				714545291992280C0099EA26 /* CSingleton.h */,
@@ -1182,6 +1196,7 @@
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
 				7145452B1992280C0099EA26 /* CCPomelo.cpp in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
+				71370DCF1992661400D99979 /* lua_pomelo.cpp in Sources */,
 				C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */,
 				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
 				C033B51D191B337200D06937 /* VisibleRect.cpp in Sources */,
@@ -1216,6 +1231,7 @@
 				C00FD4981938512100C6382D /* Portrait_png.cpp in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
 				C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */,
+				71370DCE1992661400D99979 /* lua_pomelo.cpp in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
 				C00FD49A1938512100C6382D /* Runtime.cpp in Sources */,
 				3EB515621952865D006966AA /* message_lite.cc in Sources */,

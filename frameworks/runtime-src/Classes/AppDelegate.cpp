@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
+#include "lua_pomelo.h"
 
 using namespace CocosDenshion;
 
@@ -59,6 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
+    register_pomelo(stack->getLuaState());
     
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())
