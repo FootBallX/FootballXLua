@@ -241,14 +241,14 @@ void CCPomelo::dispatchCallbacks(float delta)
         connectCallBack();
     }
     
-    pthread_mutex_lock(&task_count_mutex);
+	task_count_mutex.lock();
     
     if (task_count == 0)
     {
         Director::getInstance()->getScheduler()->pauseTarget(this);
     }
     
-    pthread_mutex_unlock(&task_count_mutex);
+	task_count_mutex.unlock();
     
 }
 
@@ -259,11 +259,6 @@ CCPomelo::CCPomelo()
     Director::getInstance()->getScheduler()->schedule(schedule_selector(CCPomelo::dispatchCallbacks), this, 0, false);
     Director::getInstance()->getScheduler()->pauseTarget(this);
     client = pc_client_new();
-    pthread_mutex_init(&reponse_queue_mutex, NULL);
-    pthread_mutex_init(&event_queue_mutex, NULL);
-    pthread_mutex_init(&notify_queue_mutex, NULL);
-    pthread_mutex_init(&task_count_mutex, NULL);
-    pthread_mutex_init(&connect_mutex, NULL);
     task_count = 0;
     connect_status = 0;
     connect_content = NULL;
@@ -341,8 +336,8 @@ void CCPomelo::cleanup(){
     cleanupEventContent();
     cleanupNotifyContent();
     cleanupRequestContent();
-    pthread_mutex_lock(&task_count_mutex);
-    pthread_mutex_unlock(&task_count_mutex);
+	task_count_mutex.lock();
+	task_count_mutex.unlock();
 }
 
 
@@ -408,9 +403,9 @@ void CCPomelo::removeListener(const char *event){
 
 void CCPomelo::incTaskCount()
 {
-    pthread_mutex_lock(&task_count_mutex);
+	task_count_mutex.lock();
     task_count++;
-    pthread_mutex_unlock(&task_count_mutex);
+	task_count_mutex.unlock();
     Director::getInstance()->getScheduler()->resumeTarget(POMELO);
 }
 
@@ -418,65 +413,65 @@ void CCPomelo::incTaskCount()
 
 void CCPomelo::desTaskCount()
 {
-    pthread_mutex_lock(&task_count_mutex);
+	task_count_mutex.lock();
     task_count--;
-    pthread_mutex_unlock(&task_count_mutex);
+	task_count_mutex.unlock();
 }
 
 
 
 void CCPomelo::lockReponsQeueue()
 {
-    pthread_mutex_lock(&reponse_queue_mutex);
+	reponse_queue_mutex.lock();
 }
 
 
 
 void CCPomelo::unlockReponsQeueue()
 {
-    pthread_mutex_unlock(&reponse_queue_mutex);
+	reponse_queue_mutex.unlock();
 }
 
 
 
 void CCPomelo::lockEventQeueue()
 {
-    pthread_mutex_lock(&event_queue_mutex);
+	event_queue_mutex.lock();
 }
 
 
 
 void CCPomelo::unlockEventQeueue()
 {
-    pthread_mutex_unlock(&event_queue_mutex);
+	event_queue_mutex.unlock();
 }
 
 
 
 void CCPomelo::lockNotifyQeueue()
 {
-    pthread_mutex_lock(&notify_queue_mutex);
+	notify_queue_mutex.lock();
 }
 
 
 
 void CCPomelo::unlockNotifyQeueue()
 {
-    pthread_mutex_unlock(&notify_queue_mutex);
+	notify_queue_mutex.unlock();
 }
 
 
 
 void CCPomelo::lockConnectContent()
 {
-    pthread_mutex_unlock(&connect_mutex);
+	connect_mutex.lock();
 }
 
 
 
 void CCPomelo::unlockConnectContent()
 {
-    pthread_mutex_unlock(&connect_mutex);
+	connect_mutex.unlock();
 }
 
 
