@@ -77,14 +77,14 @@
 		50D7C96C17EBBEDF005D0B91 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */; };
 		50D7C96E17EBBEE6005D0B91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96D17EBBEE6005D0B91 /* AppKit.framework */; };
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
-		714545151991FA850099EA26 /* CCPomelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 714545121991FA850099EA26 /* CCPomelo.cpp */; };
-		714545161991FA850099EA26 /* CCPomelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 714545121991FA850099EA26 /* CCPomelo.cpp */; };
 		71454521199216AD0099EA26 /* libjansson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451A199216550099EA26 /* libjansson.a */; };
 		71454522199216AD0099EA26 /* libpomelo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451B199216550099EA26 /* libpomelo.a */; };
 		71454523199216AD0099EA26 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451C199216550099EA26 /* libuv.a */; };
 		71454524199216C90099EA26 /* libjansson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451E1992166F0099EA26 /* libjansson.a */; };
 		71454525199216C90099EA26 /* libpomelo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7145451F1992166F0099EA26 /* libpomelo.a */; };
 		71454526199216C90099EA26 /* libuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 714545201992166F0099EA26 /* libuv.a */; };
+		7145452A1992280C0099EA26 /* CCPomelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 714545271992280C0099EA26 /* CCPomelo.cpp */; };
+		7145452B1992280C0099EA26 /* CCPomelo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 714545271992280C0099EA26 /* CCPomelo.cpp */; };
 		C00FD4921938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4931938512100C6382D /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48A1938512100C6382D /* Landscape_png.cpp */; };
 		C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C00FD48B1938512100C6382D /* PlayDisable_png.cpp */; };
@@ -429,15 +429,15 @@
 		50D7C96B17EBBEDF005D0B91 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		714545121991FA850099EA26 /* CCPomelo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPomelo.cpp; sourceTree = "<group>"; };
-		714545131991FA850099EA26 /* CCPomelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPomelo.h; sourceTree = "<group>"; };
-		714545141991FA850099EA26 /* CSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSingleton.h; sourceTree = "<group>"; };
 		7145451A199216550099EA26 /* libjansson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjansson.a; sourceTree = "<group>"; };
 		7145451B199216550099EA26 /* libpomelo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpomelo.a; sourceTree = "<group>"; };
 		7145451C199216550099EA26 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libuv.a; sourceTree = "<group>"; };
 		7145451E1992166F0099EA26 /* libjansson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjansson.a; sourceTree = "<group>"; };
 		7145451F1992166F0099EA26 /* libpomelo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpomelo.a; sourceTree = "<group>"; };
 		714545201992166F0099EA26 /* libuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libuv.a; sourceTree = "<group>"; };
+		714545271992280C0099EA26 /* CCPomelo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPomelo.cpp; path = ../Classes/CCPomelo.cpp; sourceTree = "<group>"; };
+		714545281992280C0099EA26 /* CCPomelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPomelo.h; path = ../Classes/CCPomelo.h; sourceTree = "<group>"; };
+		714545291992280C0099EA26 /* CSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSingleton.h; path = ../Classes/CSingleton.h; sourceTree = "<group>"; };
 		C00FD48A1938512100C6382D /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
 		C00FD48B1938512100C6382D /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
 		C00FD48C1938512100C6382D /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
@@ -843,9 +843,9 @@
 		F293BB7C15EB830F00256477 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				714545121991FA850099EA26 /* CCPomelo.cpp */,
-				714545131991FA850099EA26 /* CCPomelo.h */,
-				714545141991FA850099EA26 /* CSingleton.h */,
+				714545271992280C0099EA26 /* CCPomelo.cpp */,
+				714545281992280C0099EA26 /* CCPomelo.h */,
+				714545291992280C0099EA26 /* CSingleton.h */,
 				C00FD4891938512100C6382D /* runtime */,
 				C033B51A191B337200D06937 /* VisibleRect.cpp */,
 				C033B51B191B337200D06937 /* VisibleRect.h */,
@@ -1180,7 +1180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */,
-				714545161991FA850099EA26 /* CCPomelo.cpp in Sources */,
+				7145452B1992280C0099EA26 /* CCPomelo.cpp in Sources */,
 				5023813317EBBCE400990C9B /* AppDelegate.cpp in Sources */,
 				C00FD4971938512100C6382D /* PlayEnable_png.cpp in Sources */,
 				C00FD4951938512100C6382D /* PlayDisable_png.cpp in Sources */,
@@ -1226,7 +1226,7 @@
 				3EB515661952865D006966AA /* atomicops_internals_x86_msvc.cc in Sources */,
 				3EB515641952865D006966AA /* repeated_field.cc in Sources */,
 				C00FD4941938512100C6382D /* PlayDisable_png.cpp in Sources */,
-				714545151991FA850099EA26 /* CCPomelo.cpp in Sources */,
+				7145452A1992280C0099EA26 /* CCPomelo.cpp in Sources */,
 				C00FD49C1938512100C6382D /* Shine_png.cpp in Sources */,
 				3EB5156E1952865D006966AA /* wire_format_lite.cc in Sources */,
 				3EB515581952865D006966AA /* extension_set.cc in Sources */,
