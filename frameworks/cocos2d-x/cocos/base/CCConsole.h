@@ -32,6 +32,7 @@
 
 #ifndef __SSIZE_T
 #define __SSIZE_T
+#define _SSIZE_T_	// for libuv
 typedef SSIZE_T ssize_t;
 #endif // __SSIZE_T
 
