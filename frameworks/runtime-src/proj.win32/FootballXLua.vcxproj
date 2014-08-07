@@ -68,7 +68,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\libpomelo\deps\jansson\src;$(EngineRoot)external\libpomelo\deps\uv\include;$(EngineRoot)external\libpomelo\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\Classes\runtime;$(ProjectDir)..\Classes\LuaBindings;$(ProjectDir)..\Classes\protobuf-lite;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\libpomelo\deps\jansson\src;$(EngineRoot)external\libpomelo\deps\uv\include;$(EngineRoot)external\libpomelo\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -87,8 +87,8 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);$(EngineRoot)external\libpomelo\libWin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;libpomelo.lib;libuv.lib;jansson.lib;Iphlpapi.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
       <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -186,6 +186,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\CCPomelo.h" />
     <ClInclude Include="..\Classes\ConfigParser.h" />
     <ClInclude Include="..\Classes\CSingleton.h" />
+    <ClInclude Include="..\Classes\LuaBindings\lua_pomelo.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h" />
@@ -219,6 +220,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\CCPomelo.cpp" />
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
+    <ClCompile Include="..\Classes\LuaBindings\lua_pomelo.cpp" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc" />
@@ -283,6 +285,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\game.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\script\pomelo.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

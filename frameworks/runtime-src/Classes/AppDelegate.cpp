@@ -60,7 +60,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register custom function
     //LuaStack* stack = engine->getLuaStack();
     //register_custom_function(stack->getLuaState());
-    register_pomelo(stack->getLuaState());
+	auto state = stack->getLuaState();
+	lua_getglobal(state, "_G");
+	register_all_pomelo(state);
+	lua_pop(state, 1);
+
+	engine->executeScriptFile("pomelo.lua");
     
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())

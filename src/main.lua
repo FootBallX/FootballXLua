@@ -25,7 +25,7 @@ local function main()
     cc.FileUtils:getInstance():addSearchPath("res")
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
     
-    ccp.Pomelo:getInstance()
+    ccp.PML:connect("127.0.0.1", 1234);
     --create scene 
     local scene = require("GameScene")
     local gameScene = scene.create()

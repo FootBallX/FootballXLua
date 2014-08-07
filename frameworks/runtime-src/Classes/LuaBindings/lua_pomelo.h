@@ -19,6 +19,6 @@ extern "C" {
 }
 #endif
 
-int register_pomelo(lua_State* tolua_S);
+int register_all_pomelo(lua_State* tolua_S);
 
 #endif /* defined(__FootballXLua__lua_pomelo__) */

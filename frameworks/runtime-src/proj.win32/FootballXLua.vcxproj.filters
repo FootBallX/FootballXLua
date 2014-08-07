@@ -16,6 +16,12 @@
     <Filter Include="Classes\runtime\protobuf-lite">
       <UniqueIdentifier>{28edb895-7c19-408b-abd6-130196087d96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Script">
+      <UniqueIdentifier>{8cecbe58-0ebf-4295-978e-94cea0ad6e1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\LuaBindings">
+      <UniqueIdentifier>{e6494c4b-ffa6-449e-8cd0-3553497c2dad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -112,6 +118,9 @@
     <ClInclude Include="..\Classes\CSingleton.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\LuaBindings\lua_pomelo.h">
+      <Filter>Classes\LuaBindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -192,6 +201,9 @@
     <ClCompile Include="..\Classes\CCPomelo.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\LuaBindings\lua_pomelo.cpp">
+      <Filter>Classes\LuaBindings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -200,5 +212,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\game.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\script\pomelo.lua">
+      <Filter>Classes\Script</Filter>
+    </None>
   </ItemGroup>
 </Project>
