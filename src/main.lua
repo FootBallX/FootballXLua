@@ -30,14 +30,15 @@ local function main()
     
     cc.FileUtils:getInstance():addSearchPath("src")
     cc.FileUtils:getInstance():addSearchPath("res")
+    cc.FileUtils:getInstance():addSearchPath("res/Assets")
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
     
-    PomeloClient:getInstance():registerScriptHandler(netHandler);
-    PomeloClient:getInstance():connectA("127.0.0.1", 1234);
+--    PomeloClient:getInstance():registerScriptHandler(netHandler);
+--    PomeloClient:getInstance():connectA("127.0.0.1", 3017);
+
     --create scene 
-    local scene = require("GameScene")
+    local scene = require("loginLayer")
     local gameScene = scene.create()
-    gameScene:playBgMusic()
     
     if cc.Director:getInstance():getRunningScene() then
         cc.Director:getInstance():replaceScene(gameScene)

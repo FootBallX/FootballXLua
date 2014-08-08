@@ -29,8 +29,8 @@ LOCAL_SRC_FILES := \
 ../../Classes/VisibleRect.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
-../../Classes/CCPomelo.cpp\
-../../Classes/LuaBindings/lua_pomelo.cpp\
+../../Classes/PomeloClient.cpp\
+../../Classes/LuaBindings/Lua_PomeloClient.cpp\
 lua/Runtime_android.cpp \
 lua/main.cpp
 
