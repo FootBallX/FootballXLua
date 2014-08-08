@@ -30,14 +30,17 @@ LOCAL_SRC_FILES := \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
 ../../Classes/CCPomelo.cpp\
+../../Classes/LuaBindings/lua_pomelo.cpp\
 lua/Runtime_android.cpp \
 lua/main.cpp
+
 
 
 LOCAL_C_INCLUDES := \
 $(LOCAL_PATH)/../../Classes/protobuf-lite \
 $(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
+$(LOCAL_PATH)/../../Classes/LuaBindings \
 $(LOCAL_PATH)/../../../cocos2d-x/external/libpomelo/include \
 $(LOCAL_PATH)/../../../cocos2d-x/external/libpomelo/deps/jansson/src \
 $(LOCAL_PATH)/../../../cocos2d-x/external/libpomelo/deps/uv/include

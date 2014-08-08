@@ -15,6 +15,13 @@ function __G__TRACKBACK__(msg)
     return msg
 end
 
+local function netHandler(event, msg)
+    cclog("--------------111")
+    cclog(event)
+    cclog("111-------------")
+end
+
+
 local function main()
     collectgarbage("collect")
     -- avoid memory leak
@@ -25,7 +32,8 @@ local function main()
     cc.FileUtils:getInstance():addSearchPath("res")
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
     
-    ccp.PML:connect("127.0.0.1", 1234);
+    PomeloClient:getInstance():registerScriptHandler(netHandler);
+    PomeloClient:getInstance():connectA("127.0.0.1", 1234);
     --create scene 
     local scene = require("GameScene")
     local gameScene = scene.create()

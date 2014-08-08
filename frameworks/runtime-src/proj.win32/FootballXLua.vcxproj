@@ -183,10 +183,10 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\CCPomelo.h" />
     <ClInclude Include="..\Classes\ConfigParser.h" />
     <ClInclude Include="..\Classes\CSingleton.h" />
-    <ClInclude Include="..\Classes\LuaBindings\lua_pomelo.h" />
+    <ClInclude Include="..\Classes\LuaBindings\Lua_PomeloClient.h" />
+    <ClInclude Include="..\Classes\PomeloClient.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\extension_set.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.h" />
     <ClInclude Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.h" />
@@ -218,9 +218,9 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\CCPomelo.cpp" />
     <ClCompile Include="..\Classes\ConfigParser.cpp" />
-    <ClCompile Include="..\Classes\LuaBindings\lua_pomelo.cpp" />
+    <ClCompile Include="..\Classes\LuaBindings\Lua_PomeloClient.cpp" />
+    <ClCompile Include="..\Classes\PomeloClient.cpp" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\extension_set.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\generated_message_util.cc" />
     <ClCompile Include="..\Classes\protobuf-lite\google\protobuf\io\coded_stream.cc" />

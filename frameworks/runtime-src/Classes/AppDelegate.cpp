@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "Runtime.h"
 #include "ConfigParser.h"
-#include "lua_pomelo.h"
+#include "lua_PomeloClient.h"
 
 using namespace CocosDenshion;
 
@@ -62,10 +62,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     //register_custom_function(stack->getLuaState());
 	auto state = stack->getLuaState();
 	lua_getglobal(state, "_G");
-	register_all_pomelo(state);
+	tolua_PomeloClient_open(state);
 	lua_pop(state, 1);
 
-	engine->executeScriptFile("pomelo.lua");
+	//engine->executeScriptFile("pomelo.lua");
     
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())
