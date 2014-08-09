@@ -116,6 +116,12 @@ PomeloClient* PomeloClient::getInstance()
     return s_PomeloClient;
 }
 
+
+void onCB(pc_client_t *client, pc_proto_op op, const char* fileName, void *data)
+{
+    
+}
+
 int PomeloClient::connect(const char* addr,int port){
     struct sockaddr_in address;
     memset(&address, 0, sizeof(struct sockaddr_in));
@@ -251,4 +257,10 @@ void PomeloClient::callScriptHandler(const char* event, const char* msg) {
         pStack->executeFunctionByHandler(this->scriptHandler, 2);
 		
 	}
+}
+
+
+void PomeloClient::setProtoDir(const char* readDir, const char* writeDir)
+{
+    pc_proto_init(this->client, readDir, writeDir);
 }

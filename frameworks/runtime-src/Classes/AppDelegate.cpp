@@ -5,6 +5,7 @@
 #include "Runtime.h"
 #include "ConfigParser.h"
 #include "lua_PomeloClient.h"
+#include "PomeloClient.h"
 
 using namespace CocosDenshion;
 

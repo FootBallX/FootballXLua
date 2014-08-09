@@ -1,0 +1,208 @@
+{
+  "version": "1.0.0.0",
+  "designWidth": 960,
+  "designHeight": 640,
+  "dataScale": 1.0,
+  "textures": [],
+  "texturesPng": [
+    "/Applications/Cocos Studio.app/Contents/MacOS/EditorDefaultRes/GUI/button.png"
+  ],
+  "nodeTree": {
+    "options": {
+      "$type": "EditorCommon.JsonModel.Component.GUI.RootGUISurrogate, EditorCommon",
+      "visible": true,
+      "frameEvent": null,
+      "name": "Node",
+      "classname": "Node"
+    },
+    "children": [
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+          "text": "userName",
+          "x": 398.0,
+          "y": 450.0,
+          "visible": true,
+          "classType": "Label",
+          "width": 97.0,
+          "height": 32.0,
+          "positionPercentX": 0.829166651,
+          "positionPercentY": 1.40625,
+          "sizePercentX": 0.375,
+          "sizePercentY": 0.1,
+          "actionTag": 467912317,
+          "tag": 2,
+          "anchorPointX": 0.0,
+          "ignoreSize": true,
+          "name": "Label_1",
+          "classname": "Label"
+        },
+        "children": [],
+        "classname": "Label"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.TextFieldSurrogate, EditorCommon",
+          "text": "",
+          "placeHolder": "AAAAAAAAAABBBBBBBBBBCCCCCCCCCC",
+          "x": 398.0,
+          "y": 377.0,
+          "touchAble": true,
+          "visible": true,
+          "classType": "TextField",
+          "width": 394.0,
+          "height": 32.0,
+          "positionPercentX": 0.829166651,
+          "positionPercentY": 1.178125,
+          "sizePercentX": 0.375,
+          "sizePercentY": 0.1,
+          "actionTag": 278675083,
+          "tag": 3,
+          "anchorPointX": 0.0,
+          "ignoreSize": true,
+          "name": "TextField_userName",
+          "classname": "TextField"
+        },
+        "children": [],
+        "classname": "TextField"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+          "text": "password",
+          "x": 398.0,
+          "y": 306.0,
+          "visible": true,
+          "classType": "Label",
+          "width": 90.0,
+          "height": 32.0,
+          "positionPercentX": 0.829166651,
+          "positionPercentY": 0.95625,
+          "sizePercentX": 0.375,
+          "sizePercentY": 0.1,
+          "actionTag": 982312782,
+          "tag": 4,
+          "anchorPointX": 0.0,
+          "ignoreSize": true,
+          "name": "Label_3",
+          "classname": "Label"
+        },
+        "children": [],
+        "classname": "Label"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.TextFieldSurrogate, EditorCommon",
+          "text": "",
+          "placeHolder": "AAAAAAAAAABBBBBBBBBB",
+          "passwordEnable": true,
+          "x": 398.0,
+          "y": 240.0,
+          "colorR": 89,
+          "colorG": 110,
+          "colorB": 196,
+          "touchAble": true,
+          "visible": true,
+          "classType": "TextField",
+          "width": 266.0,
+          "height": 32.0,
+          "positionPercentX": 0.829166651,
+          "positionPercentY": 0.75,
+          "sizePercentX": 0.375,
+          "sizePercentY": 0.1,
+          "actionTag": 391767820,
+          "tag": 5,
+          "anchorPointX": 0.0,
+          "ignoreSize": true,
+          "name": "TextField_password",
+          "classname": "TextField"
+        },
+        "children": [],
+        "classname": "TextField"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.ButtonSurrogate, EditorCommon",
+          "normalData": {
+            "resourceType": 0,
+            "path": "GUI/button.png",
+            "plistFile": ""
+          },
+          "pressedData": {
+            "resourceType": 0
+          },
+          "disabledData": {
+            "resourceType": 0
+          },
+          "text": "login",
+          "capInsetsWidth": 1.0,
+          "capInsetsHeight": 1.0,
+          "scale9Width": 103.0,
+          "scale9Height": 40.0,
+          "x": 399.0,
+          "y": 120.0,
+          "touchAble": true,
+          "visible": true,
+          "classType": "Button",
+          "width": 103.0,
+          "height": 40.0,
+          "positionPercentX": 0.83125,
+          "positionPercentY": 0.375,
+          "sizePercentX": 0.214583337,
+          "sizePercentY": 0.125,
+          "actionTag": 763824739,
+          "tag": 6,
+          "ignoreSize": true,
+          "name": "Button_Login",
+          "classname": "Button"
+        },
+        "children": [],
+        "classname": "Button"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.ButtonSurrogate, EditorCommon",
+          "normalData": {
+            "resourceType": 0,
+            "path": "GUI/button.png",
+            "plistFile": ""
+          },
+          "pressedData": {
+            "resourceType": 0
+          },
+          "disabledData": {
+            "resourceType": 0
+          },
+          "text": "cancel",
+          "capInsetsWidth": 1.0,
+          "capInsetsHeight": 1.0,
+          "scale9Width": 103.0,
+          "scale9Height": 40.0,
+          "x": 572.0,
+          "y": 120.0,
+          "touchAble": true,
+          "visible": true,
+          "classType": "Button",
+          "width": 103.0,
+          "height": 40.0,
+          "positionPercentX": 1.19166672,
+          "positionPercentY": 0.375,
+          "sizePercentX": 0.214583337,
+          "sizePercentY": 0.125,
+          "actionTag": 64559397,
+          "tag": 7,
+          "ignoreSize": true,
+          "name": "Button_Cancel",
+          "classname": "Button"
+        },
+        "children": [],
+        "classname": "Button"
+      }
+    ],
+    "classname": "Node"
+  },
+  "action": {
+    "speed": 1.0,
+    "timelines": []
+  }
+}

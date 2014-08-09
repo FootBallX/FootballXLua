@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>/Users/ray/Documents/Proj/cocos/FootballXLua/Assets/FootballX</ProjectDir>
+  <Version>1.0.0.0</Version>
+  <Resources>/Users/ray/Documents/Proj/cocos/FootballXLua/Assets/FootballX/Resources</Resources>
+  <Name>FootballX</Name>
+  <JsonFileName>FootballX.json</JsonFileName>
+  <JsonFolder>/Users/ray/Documents/Proj/cocos/FootballXLua/Assets/FootballX/Json</JsonFolder>
+  <JsonList>
+    <string>LoginLayer.json</string>
+  </JsonList>
+  <filePath>/Users/ray/Documents/Proj/cocos/FootballXLua/Assets/FootballX/FootballX.xml.ui</filePath>
+  <ProjectType>UIProject</ProjectType>
+  <ResRelativePath />
+  <imageFileList />
+  <imagePngList />
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>LoginLayer.json</CurrentUIJson>
+  <CanvasSize>
+    <Width>960</Width>
+    <Height>640</Height>
+  </CanvasSize>
+</UIProject>

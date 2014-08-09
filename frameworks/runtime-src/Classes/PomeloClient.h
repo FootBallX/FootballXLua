@@ -31,6 +31,7 @@ public:
 	void request(const char *route, const char *str);
     void registerScriptHandler(cocos2d::LUA_FUNCTION funcID);
 	void unregisterScriptHandler(void);
+    void setProtoDir(const char* readDir, const char* writeDir);
 
     PomeloClient();
     virtual ~PomeloClient();

@@ -1,5 +1,6 @@
 
 require "Cocos2d"
+require "Json"
 
 -- cclog
 local cclog = function(...)
@@ -15,12 +16,6 @@ function __G__TRACKBACK__(msg)
     return msg
 end
 
-local function netHandler(event, msg)
-    cclog("--------------111")
-    cclog(event)
-    cclog("111-------------")
-end
-
 
 local function main()
     collectgarbage("collect")
@@ -31,10 +26,7 @@ local function main()
     cc.FileUtils:getInstance():addSearchPath("src")
     cc.FileUtils:getInstance():addSearchPath("res")
     cc.FileUtils:getInstance():addSearchPath("res/Assets")
-    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(480, 320, 0)
-    
---    PomeloClient:getInstance():registerScriptHandler(netHandler);
---    PomeloClient:getInstance():connectA("127.0.0.1", 3017);
+    cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(960, 640, 0)
 
     --create scene 
     local scene = require("loginLayer")
