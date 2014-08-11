@@ -8,6 +8,7 @@
   <JsonFolder>/Users/ray/Documents/Proj/cocos/FootballXLua/Assets/FootballX/Json</JsonFolder>
   <JsonList>
     <string>LoginLayer.json</string>
+    <string>LobbyLayer.json</string>
   </JsonList>
   <filePath>/Users/ray/Documents/Proj/cocos/FootballXLua/Assets/FootballX/FootballX.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
@@ -15,7 +16,7 @@
   <imageFileList />
   <imagePngList />
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>LoginLayer.json</CurrentUIJson>
+  <CurrentUIJson>LobbyLayer.json</CurrentUIJson>
   <CanvasSize>
     <Width>960</Width>
     <Height>640</Height>

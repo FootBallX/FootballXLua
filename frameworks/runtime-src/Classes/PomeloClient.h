@@ -44,7 +44,7 @@ public:
 private:
     cocos2d::LUA_FUNCTION scriptHandler;
     int task_count;
-    pc_client_t *client;
+    pc_client_t *client = nullptr;
     std::mutex reponse_queue_mutex;
 	std::mutex task_count_mutex;
     std::queue< std::map<std::string, std::string> > msgQueue;

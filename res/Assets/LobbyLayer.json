@@ -1,0 +1,128 @@
+{
+  "version": "1.0.0.0",
+  "designWidth": 960,
+  "designHeight": 640,
+  "dataScale": 1.0,
+  "textures": [],
+  "texturesPng": [
+    "/Applications/Cocos Studio.app/Contents/MacOS/EditorDefaultRes/GUI/button.png"
+  ],
+  "nodeTree": {
+    "options": {
+      "$type": "EditorCommon.JsonModel.Component.GUI.RootGUISurrogate, EditorCommon",
+      "visible": true,
+      "frameEvent": null,
+      "name": "Node",
+      "classname": "Node"
+    },
+    "children": [
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.ButtonSurrogate, EditorCommon",
+          "normalData": {
+            "resourceType": 0,
+            "path": "GUI/button.png",
+            "plistFile": ""
+          },
+          "pressedData": {
+            "resourceType": 0
+          },
+          "disabledData": {
+            "resourceType": 0
+          },
+          "text": "ready",
+          "capInsetsWidth": 1.0,
+          "capInsetsHeight": 1.0,
+          "scale9Width": 103.0,
+          "scale9Height": 40.0,
+          "x": 376.0,
+          "y": 242.0,
+          "touchAble": true,
+          "visible": true,
+          "classType": "Button",
+          "width": 103.0,
+          "height": 40.0,
+          "positionPercentX": 0.391666681,
+          "positionPercentY": 0.378125,
+          "sizePercentX": 0.107291669,
+          "sizePercentY": 0.0625,
+          "actionTag": 465247147,
+          "tag": 10,
+          "ignoreSize": true,
+          "name": "Button_Ready",
+          "classname": "Button"
+        },
+        "children": [],
+        "classname": "Button"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.ButtonSurrogate, EditorCommon",
+          "normalData": {
+            "resourceType": 0,
+            "path": "GUI/button.png",
+            "plistFile": ""
+          },
+          "pressedData": {
+            "resourceType": 0
+          },
+          "disabledData": {
+            "resourceType": 0
+          },
+          "text": "quit",
+          "capInsetsWidth": 1.0,
+          "capInsetsHeight": 1.0,
+          "scale9Width": 103.0,
+          "scale9Height": 40.0,
+          "x": 563.0,
+          "y": 243.0,
+          "touchAble": true,
+          "visible": true,
+          "classType": "Button",
+          "width": 103.0,
+          "height": 40.0,
+          "positionPercentX": 0.5864583,
+          "positionPercentY": 0.3796875,
+          "sizePercentX": 0.107291669,
+          "sizePercentY": 0.0625,
+          "actionTag": 665732783,
+          "tag": 11,
+          "ignoreSize": true,
+          "name": "Button_Quit",
+          "classname": "Button"
+        },
+        "children": [],
+        "classname": "Button"
+      },
+      {
+        "options": {
+          "$type": "EditorCommon.JsonModel.Component.GUI.LabelSurrogate, EditorCommon",
+          "text": "Click ready to sign up game.",
+          "x": 324.0,
+          "y": 355.0,
+          "visible": true,
+          "classType": "Label",
+          "width": 271.0,
+          "height": 32.0,
+          "positionPercentX": 0.3375,
+          "positionPercentY": 0.5546875,
+          "sizePercentX": 0.09791667,
+          "sizePercentY": 0.05,
+          "actionTag": 4547001,
+          "tag": 13,
+          "anchorPointX": 0.0,
+          "ignoreSize": true,
+          "name": "Label_Info",
+          "classname": "Label"
+        },
+        "children": [],
+        "classname": "Label"
+      }
+    ],
+    "classname": "Node"
+  },
+  "action": {
+    "speed": 1.0,
+    "timelines": []
+  }
+}

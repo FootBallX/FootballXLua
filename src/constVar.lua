@@ -3,6 +3,63 @@ constVar = {
     Event = {
         onConnected = "connected",
         onConnectFailed = "connectFailed",
-        gateQureyConnectorEntry = "gate.gateHandler.queryConnectorEntry"
+        gateQureyConnectorEntry = "gate.gateHandler.queryConnectorEntry",
+        connectorLogin = "connector.entryHandler.login",
+        connectorGetPlayerInfo = "connector.entryHandler.getPlayerInfo",
+        leagueSignUp = "league.leagueHandler.signUp",
+        lobbyOnPair = "onPair"
+    },
+    
+    PomeloCode = {
+        OK = 200, 
+        FAIL = 500, 
+    
+        ENTRY = {
+            FA_TOKEN_INVALID =   1001, 
+            FA_TOKEN_EXPIRE =    1002, 
+            FA_USER_NOT_EXIST =  1003,
+            FA_USER_ALREADY_LOGIN =  1004,
+            FA_USER_PWD_ERROR =  1005,
+        }, 
+    
+        GATE = {
+            FA_NO_SERVER_AVAILABLE = 2001
+        }, 
+    
+        CHAT = {
+            FA_CHANNEL_CREATE =      3001, 
+            FA_CHANNEL_NOT_EXIST =   3002, 
+            FA_UNKNOWN_CONNECTOR =   3003, 
+            FA_USER_NOT_ONLINE =     3004 
+        },
+        
+        UNIT_STATE ={
+            US_NORMAL =              0,
+            US_BUILDING =            1,
+            US_READY =               2 
+        },
+        
+    
+        GAMEPLAY = {
+            FA_GAMEPLAY_NOT_LOGIN =  5001,
+            
+            HOME ={
+                FA_BUILD_NO_MONEY  = 10001,
+                FA_BUILD_NO_SPACE  = 10002,
+                FA_BUILD_WRONG_NAME  = 10003,
+                FA_REMOVE_WRONG_PARAM  = 10004,
+                FA_MOVE_NO_SPACE  = 10005
+            }
+        },
+    
+        LEAGUE = {
+            FA_FORMATION_ERR = 6001
+        }
+    },
+    
+    SIDE = {
+        LEFT = 0,
+        RIGHT = 1,
+        NONE = 2
     }
 }

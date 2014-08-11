@@ -123,6 +123,8 @@ void onCB(pc_client_t *client, pc_proto_op op, const char* fileName, void *data)
 }
 
 int PomeloClient::connect(const char* addr,int port){
+    disconnect();
+    
     struct sockaddr_in address;
     memset(&address, 0, sizeof(struct sockaddr_in));
     address.sin_family = AF_INET;
@@ -142,6 +144,8 @@ int PomeloClient::connect(const char* addr,int port){
 
 int PomeloClient::connectA(const char* addr, int port)
 {
+    disconnect();
+    
 	struct sockaddr_in address;
 	memset(&address, 0, sizeof(struct sockaddr_in));
 	address.sin_family = AF_INET;
@@ -163,9 +167,12 @@ int PomeloClient::connectA(const char* addr, int port)
 
 
 void PomeloClient::disconnect() {
+    // rayma temp code
+    return;
     if(client){
-//              pc_client_stop(client);
+//      pc_client_stop(client);
         pc_client_destroy(client);
+        client = nullptr;
     }
 }
 
@@ -173,7 +180,15 @@ void PomeloClient::request(const char *route, const char *str)
 {
 	pc_request_t *request = pc_request_new();
 	json_error_t error;
-	json_t *msg = json_loads(str, JSON_DECODE_ANY, &error);
+    json_t *msg = nullptr;
+    if (str[0] == '\0')
+    {
+        msg = json_object();
+    }
+    else
+    {
+        msg = json_loads(str, JSON_DECODE_ANY, &error);
+    }
 	if(!msg)
 	{
 		pushMsg(std::string(route), std::string("{\"error\":true}"));

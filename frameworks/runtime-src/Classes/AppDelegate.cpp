@@ -67,7 +67,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	lua_pop(state, 1);
 
 	//engine->executeScriptFile("pomelo.lua");
-    
 #if (COCOS2D_DEBUG>0)
     if (startRuntime())
         return true;
