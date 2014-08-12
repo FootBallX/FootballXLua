@@ -6,6 +6,7 @@
 #include "ConfigParser.h"
 #include "lua_PomeloClient.h"
 #include "PomeloClient.h"
+#include "Lua_Flip3DEx.h"
 
 using namespace CocosDenshion;
 
@@ -64,6 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	auto state = stack->getLuaState();
 	lua_getglobal(state, "_G");
 	tolua_PomeloClient_open(state);
+    tolua_Flip3DEx_open(state);
 	lua_pop(state, 1);
 
 	//engine->executeScriptFile("pomelo.lua");
