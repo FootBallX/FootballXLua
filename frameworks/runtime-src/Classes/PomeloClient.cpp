@@ -167,8 +167,6 @@ int PomeloClient::connectA(const char* addr, int port)
 
 
 void PomeloClient::disconnect() {
-    // rayma temp code
-    return;
     if(client){
 //      pc_client_stop(client);
         pc_client_destroy(client);
