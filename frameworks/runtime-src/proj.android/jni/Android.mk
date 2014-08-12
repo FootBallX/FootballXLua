@@ -30,7 +30,9 @@ LOCAL_SRC_FILES := \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ConfigParser.cpp \
 ../../Classes/PomeloClient.cpp\
+../../Classes/CFlip3DEx.cpp\
 ../../Classes/LuaBindings/Lua_PomeloClient.cpp\
+../../Classes/LuaBindings/Lua_Flip3DEx.cpp\
 lua/Runtime_android.cpp \
 lua/main.cpp
 

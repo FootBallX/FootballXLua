@@ -121,6 +121,12 @@
     <ClInclude Include="..\Classes\PomeloClient.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\LuaBindings\Lua_Flip3DEx.h">
+      <Filter>Classes\LuaBindings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CFlip3DEx.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -202,6 +208,12 @@
       <Filter>Classes\LuaBindings</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PomeloClient.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\LuaBindings\Lua_Flip3DEx.cpp">
+      <Filter>Classes\LuaBindings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CFlip3DEx.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
