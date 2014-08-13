@@ -3,6 +3,7 @@ require "Cocos2dConstants"
 require "constVar"
 require "GameDatas"
 
+
 local pomelo = PomeloClient:getInstance()
 
 local STATES = {
@@ -40,28 +41,30 @@ function matchLayer:init()
     end
 
     local function netHandler(event, msg)
---        if (event == constVar.Event.leagueSignUp) then
---        elseif (event == constVar.Event.lobbyOnPair) then
---        end
+    --        if (event == constVar.Event.leagueSignUp) then
+    --        elseif (event == constVar.Event.lobbyOnPair) then
+    --        end
     end
 
     local function onNodeEvent(event)
         if "exit" == event then
---            cc.Director:getInstance():getScheduler():unscheduleScriptEntry(self.schedulerID)
+            --            cc.Director:getInstance():getScheduler():unscheduleScriptEntry(self.schedulerID)
             self:unregisterScriptHandler()
         end
     end
 
---    self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(update, 0.5, false)
+    --    self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(update, 0.5, false)
     pomelo:registerScriptHandler(netHandler)
     self:registerScriptHandler(onNodeEvent)
-    
-    pomelo:addListener(constVar.Event.lobbyOnPair)
+
+    --pomelo:addListener(constVar.Event.lobbyOnPair)
 end
 
-function matchlayer:createLayer()
-    local pitch = cc.Sprite:create("pitch.png")
-    self:addChild()
+function matchLayer:createLayer()
+    local pitch = cc.Sprite:create("Pitch/pitch.png")
+    self:addChild(pitch)
 end
 
 return matchLayer
+
+

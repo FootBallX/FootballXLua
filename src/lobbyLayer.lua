@@ -59,7 +59,6 @@ function lobbyLayer:init()
         end
     end
 
-    pomelo:disconnect()
 --    self.schedulerID = cc.Director:getInstance():getScheduler():scheduleScriptFunc(update, 0.5, false)
     pomelo:registerScriptHandler(netHandler)
     self:registerScriptHandler(onNodeEvent)

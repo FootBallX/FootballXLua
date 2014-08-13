@@ -123,6 +123,19 @@ function loginLayer:createCCS(filename)
     end
     btnLogin:addTouchEventListener(onLoginClicked)
     
+    local btnCancel = node:getChildByName("Button_Cancel")
+    local function onCancelClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local scene = require("matchLayer")
+            local gameScene = scene.create()
+            if cc.Director:getInstance():getRunningScene() then
+                cc.Director:getInstance():replaceScene(gameScene)
+            else
+                cc.Director:getInstance():runWithScene(gameScene)
+            end
+        end
+    end
+    btnCancel:addTouchEventListener(onCancelClicked)
     return node
 end
 
