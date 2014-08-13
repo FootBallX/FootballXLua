@@ -10,6 +10,10 @@ constVar = {
         lobbyOnPair = "onPair"
     },
     
+    Sys = {
+        numberMax = 1.0e14,
+    },
+    
     ResName = {
         pitch = "Pitch/pitch.png",
         pitchBlackPoint = "Pitch/BlackPoint.png",
