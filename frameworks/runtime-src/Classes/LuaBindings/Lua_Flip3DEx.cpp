@@ -61,11 +61,14 @@ static int lua_cocos2dx_Flip3DEx_finalize(lua_State* tolua_S)
 
 int tolua_Flip3DEx_open(lua_State* tolua_S)
 {
-    tolua_usertype(tolua_S,"cc.Flip3DEx");
-    tolua_cclass(tolua_S,"Flip3DEx","cc.Flip3DEx","cc.FlipX3D",nullptr);
-    
-    tolua_beginmodule(tolua_S,"Flip3DEx");
-    tolua_function(tolua_S,"create", lua_cocos2dx_Flip3DEx_create);
+    tolua_module(tolua_S,"cc",0);
+        tolua_usertype(tolua_S,"cc.Flip3DEx");
+        tolua_cclass(tolua_S,"Flip3DEx","cc.Flip3DEx","cc.FlipX3D",nullptr);
+        
+        tolua_beginmodule(tolua_S,"Flip3DEx");
+            tolua_function(tolua_S,"create", lua_cocos2dx_Flip3DEx_create);
+        tolua_endmodule(tolua_S);
+
     tolua_endmodule(tolua_S);
     return 1;
 }
