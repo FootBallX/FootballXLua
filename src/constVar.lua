@@ -7,7 +7,12 @@ constVar = {
         connectorLogin = "connector.entryHandler.login",
         connectorGetPlayerInfo = "connector.entryHandler.getPlayerInfo",
         leagueSignUp = "league.leagueHandler.signUp",
-        lobbyOnPair = "onPair"
+        lobbyOnPair = "onPair",
+        matchSync = "match.matchHandler.sync",
+        matchMenuCmd = "match.matchHandler.menuCmd",
+        matchInsructionMovieEnd = "match.matchHandler.instructionMovieEnd",
+        matchGetInfo = "match.matchHandler.getMatchInfo",
+        matchSyncTime = "match.matchHandler.time",
     },
     
     Sys = {

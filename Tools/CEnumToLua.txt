@@ -1,6 +1,8 @@
-    FORMATION =
+    START_STEP = 
     {
-        F_4_4_2 = 0,
-        F_3_2_3_2 = 1,
-        NONE = 2,
-    },
+        SYNC_TIME_BEGIN,
+        SYNC_TIME,
+        SYNC_TIME_END,
+        WAITING_MATCH_INFO,
+        NONE,
+    };

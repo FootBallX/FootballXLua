@@ -1,5 +1,6 @@
 require "Cocos2d"
 require "Cocos2dConstants"
+require "Common"
 require "constVar"
 require "GameDatas"
 
@@ -12,10 +13,6 @@ local STATES = {
 }
 
 local state = STATES.NONE
-
-local cclog = function(...)
-    print(string.format(...))
-end
 
 local loginLayer = class("loginLayer",function()
     return cc.Scene:create()

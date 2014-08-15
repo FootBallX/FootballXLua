@@ -1,8 +1,9 @@
 require "Cocos2d"
 require "Cocos2dConstants"
+require "Common"
 require "constVar"
 require "GameDatas"
-require "GamePlay.MatchManager"
+require "GamePlay.FBMatch"
 
 local pomelo = PomeloClient:getInstance()
 
@@ -10,11 +11,8 @@ local STATES = {
     NONE = 0,
 }
 
-local state = STATES.NONE
 
-local cclog = function(...)
-    print(string.format(...))
-end
+local state = STATES.NONE
 
 local matchLayer = class("matchLayer",function()
     return cc.Scene:create()
@@ -41,6 +39,7 @@ function matchLayer:ctor()
 end
 
 function matchLayer:init()
+    g_matchManager:init(1000, 600, self, require("GamePlay.NetProxy"))
     local function update(dt)
     end
 

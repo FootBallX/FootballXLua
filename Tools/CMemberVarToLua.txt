@@ -1,0 +1,20 @@
+﻿    int m_positionInFormation = -1;
+    float m_distanceFromBall = FLT_MAX;
+    float m_radiusOfOrbit = 0.f;
+    bool m_isBallController = false;
+    bool m_isGoalKeeper = false;
+    
+    CFBPlayerAI* m_brain = nullptr;
+    
+    cocos2d::Point m_curPosition;
+    cocos2d::Point m_movingVector;      -- 运动方向
+    cocos2d::Point m_targetPosition;
+    
+    FBDefs::PLAYER_INS m_instruction;
+    
+    float m_stunTime = 0.f;
+    CFBTeam* m_ownerTeam = nullptr;
+    CFBCard m_playerCard;
+    
+    float m_speedCache = -FLT_MAX;
+    float m_speedScale = 1.f;
