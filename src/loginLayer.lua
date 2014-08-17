@@ -34,6 +34,8 @@ function loginLayer:ctor()
 end
 
 function loginLayer:init()
+--    local T = require("GamePlay.Test")
+--    local d = T:A()
     local function update(dt)
     end
         

@@ -1,0 +1,11 @@
+    switch (m_controlState)
+    {
+        case FBDefs::AI_STATE_CONTROL::DRIBBLE:
+            if (m_player->moveTo(m_moveToTarget))
+            {
+                m_controlState = FBDefs::AI_STATE_CONTROL::NONE;
+            }
+            break;
+        default:
+            break;
+    }

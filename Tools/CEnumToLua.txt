@@ -1,8 +1,7 @@
-    START_STEP = 
+    enum class AI_TYPE
     {
-        SYNC_TIME_BEGIN,
-        SYNC_TIME,
-        SYNC_TIME_END,
-        WAITING_MATCH_INFO,
-        NONE,
+        GOALKEEPER,
+        BACK,
+        HALF_BACK,
+        FORWARD,
     };
