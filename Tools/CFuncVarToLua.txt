@@ -1,11 +1,24 @@
-    switch (m_controlState)
+    auto side = getSide();
+    auto pitch = FBMATCH->getPitch();
+    auto otherSide = pitch->getOtherSide(side);
+    auto gp = pitch->getGoalPos(otherSide);
+    
+    auto otherTeam = FBMATCH->getTeam(otherSide);
+    auto teamMember = otherTeam->getTeamMembers();
+    for (auto t : teamMember)
     {
-        case FBDefs::AI_STATE_CONTROL::DRIBBLE:
-            if (m_player->moveTo(m_moveToTarget))
-            {
-                m_controlState = FBDefs::AI_STATE_CONTROL::NONE;
-            }
-            break;
-        default:
-            break;
+        if (FBDefs::isPointOnTheWay(player->getPosition(), gp, t->getPosition()))
+        {
+            return false;
+        }
     }
+    
+    teamMember = getTeamMembers();
+    for (auto t : teamMember)
+    {
+        if (t != player && FBDefs::isPointOnTheWay(player->getPosition(), gp, t->getPosition()))
+        {
+            return false;
+        }
+    }
+    return true;

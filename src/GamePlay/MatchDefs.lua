@@ -10,15 +10,6 @@ MatchDefs = {
     HALF_BACK_ORBIT_RATE = 150,
     FORWARD_ORBIT_RATE = 100,
     
-    AI_TYPE =
-    {
-        "GOALKEEPER",
-        "BACK",
-        "HALF_BACK",
-        "FORWARD",
-        "NONE",
-    },
-    
     FORMATION =
     {
         "F_4_4_2",
@@ -138,6 +129,7 @@ MatchDefs = {
         "BACK",
         "HALF_BACK",
         "FORWARD",
+        "NONE",
     },
 
     AI_STATE =

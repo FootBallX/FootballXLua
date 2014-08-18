@@ -17,6 +17,7 @@ constVar = {
     
     Sys = {
         numberMax = 1.0e14,
+        INT_MIN = -1.0e14,
     },
     
     ResName = {

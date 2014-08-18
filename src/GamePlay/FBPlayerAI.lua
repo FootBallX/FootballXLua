@@ -2,13 +2,13 @@
 FBPlayerAI = class("FBPlayerAI")
 
 
---if (self.m_aiType == matchDefs.AI_TYPE.GOALKEEPER) then
+--if (self.m_aiType == matchDefs.AI_CLASS.GOALKEEPER) then
 --
---elseif (self.m_aiType == matchDefs.AI_TYPE.BACK) then
+--elseif (self.m_aiType == matchDefs.AI_CLASS.BACK) then
 --
---elseif (self.m_aiType == matchDefs.AI_TYPE.HALF_BACK) then
+--elseif (self.m_aiType == matchDefs.AI_CLASS.HALF_BACK) then
 --
---elseif (self.m_aiType == matchDefs.AI_TYPE.FORWARD) then
+--elseif (self.m_aiType == matchDefs.AI_CLASS.FORWARD) then
 --
 --end
     
@@ -28,7 +28,7 @@ function FBPlayerAI:ator()
     self.m_waitTime = 0.0;
     self.m_passBallScore = 0;
     
-    self.m_aiType = matchDefs.AI_TYPE.NONE;
+    self.m_aiType = matchDefs.AI_CLASS.NONE;
 end
 
 
@@ -49,13 +49,13 @@ function FBPlayerAI:init(team, player, homePos, orbit, type)
     self.m_state = matchDefs.AI_STATE.NONE;
 
     self.m_aiType = type;
-    if (self.m_aiType == matchDefs.AI_TYPE.GOALKEEPER) then
+    if (self.m_aiType == matchDefs.AI_CLASS.GOALKEEPER) then
         self.m_player.m_isGoalKeeper = true;
-    elseif (self.m_aiType == matchDefs.AI_TYPE.BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.BACK) then
         self.m_player.m_isGoalKeeper = false;
-    elseif (self.m_aiType == matchDefs.AI_TYPE.HALF_BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.HALF_BACK) then
         self.m_player.m_isGoalKeeper = false;
-    elseif (self.m_aiType == matchDefs.AI_TYPE.FORWARD) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.FORWARD) then
         self.m_player.m_isGoalKeeper = false;
     end
     
@@ -117,7 +117,7 @@ end
 
 
 function FBPlayerAI:updateHomePosition()
-    if (self.m_aiType == matchDefs.AI_TYPE.GOALKEEPER) then
+    if (self.m_aiType == matchDefs.AI_CLASS.GOALKEEPER) then
         local pitch = g_matchManager:getPitch();
         local pitchHeight = pitch:getPitchHeight();
         local halfPitchHeight = pitchHeight * 0.5;
@@ -128,7 +128,7 @@ function FBPlayerAI:updateHomePosition()
         
         self.m_homePosition.y = self.m_origHomePosition.y + yOffset;
         self.m_homePosition.x = self.m_origHomePosition.x;
-    elseif (self.m_aiType == matchDefs.AI_TYPE.BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.BACK) then
         local pitch = g_matchManager:getPitch();
     
         local pitchHeight = pitch:getPitchHeight();
@@ -169,7 +169,7 @@ function FBPlayerAI:updateHomePosition()
                 self.m_homePosition.x = self.m_origHomePosition.x + matchDefs.DEF_ATK_BACK_LINE_MIN + (matchDefs.DEF_ATK_BACK_LINE_MAX - matchDefs.DEF_ATK_BACK_LINE_MIN) * ballRate;
             end
         end
-    elseif (self.m_aiType == matchDefs.AI_TYPE.HALF_BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.HALF_BACK) then
         local pitch = g_matchManager:getPitch();
         
         local pitchHeight = pitch:getPitchHeight();
@@ -210,7 +210,7 @@ function FBPlayerAI:updateHomePosition()
             end
         end
 
-    elseif (self.m_aiType == matchDefs.AI_TYPE.FORWARD) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.FORWARD) then
         local pitch = g_matchManager:getPitch();
         
         local pitchHeight = pitch:getPitchHeight();
@@ -263,13 +263,13 @@ end
 
 
 function FBPlayerAI:considerSupport()
-    if (self.m_aiType == matchDefs.AI_TYPE.GOALKEEPER) then
+    if (self.m_aiType == matchDefs.AI_CLASS.GOALKEEPER) then
 
-    elseif (self.m_aiType == matchDefs.AI_TYPE.BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.BACK) then
 
-    elseif (self.m_aiType == matchDefs.AI_TYPE.HALF_BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.HALF_BACK) then
 
-    elseif (self.m_aiType == matchDefs.AI_TYPE.FORWARD) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.FORWARD) then
         if (self.m_state == matchDefs.AI_STATE.BACKHOME) then
 
             local side = self.m_team:getSide();
@@ -582,13 +582,13 @@ end
     
 function FBPlayerAI:updateSupport(dt)
 
-    if (self.m_aiType == matchDefs.AI_TYPE.GOALKEEPER) then
+    if (self.m_aiType == matchDefs.AI_CLASS.GOALKEEPER) then
     
-    elseif (self.m_aiType == matchDefs.AI_TYPE.BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.BACK) then
     
-    elseif (self.m_aiType == matchDefs.AI_TYPE.HALF_BACK) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.HALF_BACK) then
     
-    elseif (self.m_aiType == matchDefs.AI_TYPE.FORWARD) then
+    elseif (self.m_aiType == matchDefs.AI_CLASS.FORWARD) then
 
         if self.m_supportState == matchDefs.AI_STATE_SUPPORT.FIND_POS then
         
@@ -609,5 +609,5 @@ function FBPlayerAI:updateSupport(dt)
     end
 end
 
-return FBPlayerAI.new()
+return FBPlayerAI
 

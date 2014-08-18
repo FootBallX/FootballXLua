@@ -11,7 +11,7 @@ end
 
 
 function Test:A()
-    return self.a
+    return false and 1 or 2;
 end
 
 
