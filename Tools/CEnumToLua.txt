@@ -1,7 +1,6 @@
-    enum class AI_TYPE
+    enum class SIDE
     {
-        GOALKEEPER,
-        BACK,
-        HALF_BACK,
-        FORWARD,
+        SELF,       // 自己
+        OPP,        // 对方
+        NONE,
     };

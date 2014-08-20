@@ -47,6 +47,16 @@ function lobbyLayer:init()
                 cclog("sign up failed!")
             end
         elseif (event == constVar.Event.lobbyOnPair) then
+            local msgJson = json.decode(msg);
+            if (msgJson.code == constVar.PomeloCode.OK) then
+                local scene = require("matchLayer")
+                local gameScene = scene.create()
+                if cc.Director:getInstance():getRunningScene() then
+                    cc.Director:getInstance():replaceScene(gameScene)
+                else
+                    cc.Director:getInstance():runWithScene(gameScene)
+                end
+            end
         end
     end
 

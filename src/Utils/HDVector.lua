@@ -42,6 +42,22 @@ function HDVector.extend(obj)
 		end
 
 	end
+	
+	function obj:find(v, comp)
+	   for i = 1, #self do
+	       if (comp == nil) then
+	           if (self[i] == v) then
+	               return self[i];
+	           end
+           else
+            if comp(self[i], v) then
+                return self[i];
+            end
+	       end
+	   end
+	   
+	   return nil;
+	end
     
     return obj
 

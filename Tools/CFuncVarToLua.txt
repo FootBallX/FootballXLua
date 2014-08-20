@@ -1,24 +1,82 @@
-    auto side = getSide();
+    CC_ASSERT(from->getOwnerTeam() == to->getOwnerTeam());
+    auto team = from->getOwnerTeam();
+    auto size = team->getSide();
     auto pitch = FBMATCH->getPitch();
-    auto otherSide = pitch->getOtherSide(side);
-    auto gp = pitch->getGoalPos(otherSide);
-    
+    auto otherSide = pitch->getOtherSide(size);
     auto otherTeam = FBMATCH->getTeam(otherSide);
-    auto teamMember = otherTeam->getTeamMembers();
-    for (auto t : teamMember)
+    auto& otherTeamMembers = otherTeam->getTeamMembers();
+    
+    m_currentInstruction = INS_FAC->getPassBallIns();
+    m_currentInstruction->addPlayer(from);
+    
+    for (auto x : m_defendPlayerIds)
     {
-        if (FBDefs::isPointOnTheWay(player->getPosition(), gp, t->getPosition()))
+        auto pO = otherTeam->getPlayer(x);
+        int roll = RANDOM_MGR->getRand() % 300;
+        if (roll > 200)
         {
-            return false;
+            pO->setInstruction(FBDefs::PLAYER_INS::TAKCLE);
+        }
+        else if (roll > 100)
+        {
+            pO->setInstruction(FBDefs::PLAYER_INS::INTERCEPT);
+        }
+        else
+        {
+            pO->setInstruction(FBDefs::PLAYER_INS::BLOCK);
+        }
+        m_currentInstruction->addPlayer(pO);
+    }
+    
+    auto& fpos = from->getPosition();
+    auto& tpos = to->getPosition();
+    
+    vector<pair<float, CFBPlayer*>> involvePlayers;
+    
+    for (auto player : otherTeamMembers)
+    {
+        if (!player->m_isGoalKeeper)
+        {
+            auto it = std::find(m_defendPlayerIds.begin(), m_defendPlayerIds.end(), player->m_positionInFormation);
+            if (it == m_defendPlayerIds.end())
+            {
+                auto& ppos = player->getPosition();
+                if (FBDefs::isPointOnTheWay(fpos, tpos, ppos))
+                {
+                    float dist = fpos.getDistanceSq(ppos);
+                    involvePlayers.push_back(pair<float, CFBPlayer*>(dist, player));
+                }
+            }
         }
     }
     
-    teamMember = getTeamMembers();
-    for (auto t : teamMember)
+    std::sort(involvePlayers.begin(), involvePlayers.end(),
+              [](const pair<float, CFBPlayer*>& o1, const pair<float, CFBPlayer*> o2)-> bool
+              {
+                  return o1.first < o2.first;
+              });
+    
+    for (auto a : involvePlayers)
     {
-        if (t != player && FBDefs::isPointOnTheWay(player->getPosition(), gp, t->getPosition()))
+        auto pO = a.second;
+        int roll = RANDOM_MGR->getRand() % 300;
+        if (roll > 200)
         {
-            return false;
+            pO->setInstruction(FBDefs::PLAYER_INS::TAKCLE);
         }
+        else if (roll > 100)
+        {
+            pO->setInstruction(FBDefs::PLAYER_INS::INTERCEPT);
+        }
+        else
+        {
+            pO->setInstruction(FBDefs::PLAYER_INS::BLOCK);
+        }
+        m_currentInstruction->addPlayer(pO);
     }
-    return true;
+    
+    m_currentInstruction->addPlayer(to);
+    
+    m_currentInstruction->start(bind(&CFBMatch::onInstructionEnd, this));
+    
+    pauseGame(true);

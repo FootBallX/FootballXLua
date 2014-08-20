@@ -18,7 +18,7 @@ end
 function FBTeam:addPlayer(info)
     local player = require("GamePlayer.FBPlayer").new(this, info.card);
     player:setPosition(info.position);
-    
+
     if (self.m_aiType == matchDefs.AI_CLASS.GOALKEEPER) then
         player:createBrain(matchDefs.AI_CLASS.GOAL_KEEPER, info.homePosition, matchDefs.GOALKEEPER_ORBIT_RATE);
     elseif (self.m_aiType == matchDefs.AI_CLASS.BACK) then
@@ -28,11 +28,13 @@ function FBTeam:addPlayer(info)
     elseif (self.m_aiType == matchDefs.AI_CLASS.FORWARD) then
         player:createBrain(matchDefs.AI_CLASS.FORWARD, info.homePosition, matchDefs.FORWARD_ORBIT_RATE);
     end
-    
+
     self.m_teamMembers.push_back(player);
-    
+
     player.m_positionInFormation = #self.m_teamMembers - 1;
 end
+
+
 
 function FBTeam:update(dt)
     local comp
@@ -40,6 +42,7 @@ function FBTeam:update(dt)
         comp = function ( a,  b) return a < b; end
     else
         comp = function ( a,  b) return a > b; end
+    end
     
     self.m_lastPosOfPlayer = 0;
     for i = 1, #self.m_teamMembers do
@@ -61,20 +64,23 @@ function FBTeam:update(dt)
     end
 end
 
+    
+
+
 function FBTeam:think()
     if (isAttacking()) then
-    
+
         updateFieldStatusOnAttack();
-    
+
     elseif (isDefending()) then
-    
+
         updateFieldStatusOnDefend();
     end
-    
+
     for i = 1, #self.m_teamMembers do
         local player = self.m_teamMembers[i];
         if (not player:isStunned()) then
-        
+
             player:getBrain():think();
         end
     end
@@ -87,7 +93,7 @@ function FBTeam:onStartMatch(networkControl)
         local player = self.m_teamMembers[i];
         player:getBrain():setNetworkControl(networkControl);
     end
-    
+
     self:setHilightPlayerId(num - 1);
     return true;
 
@@ -107,7 +113,7 @@ function FBTeam:getPlayer(idx)
     if (idx >= 1 and idx <= #self.m_teamMembers) then
         return self.m_teamMembers[idx];
     end
-    
+
     return nil;
 
 end
@@ -151,12 +157,12 @@ function FBTeam:getTeamMembers()
     return self.m_teamMembers;
 end
 
-    
+
 function FBTeam:getLastPosOfPlayer()
     return self.m_lastPosOfPlayer;
 end
 
-    
+
 function FBTeam:getActivePlayer()
     return self.m_activePlayerId;
 end
@@ -173,70 +179,70 @@ function FBTeam:setAssistantPlayer(p)
     self.m_assistantPlayerId = p;
 end
 
-    
+
 function FBTeam:updateFieldStatusOnAttack()
     local pitch = g_matchManager:getPitch();
     local pp = self:getHilightPlayer();
-    
+
     local sizeSq = matchDefs.PASS_BALL_REDUCTION * matchDefs.PASS_BALL_REDUCTION;
-    
+
     local gridsAroundPlayer;
     HDVector.extend(gridsAroundPlayer);
-    
+
     for i = 1, #self.m_teamMembers do
         local player = self.m_teamMembers[i];
         local ai = player:getBrain();
         ai:setPassBallScore(constVar.Sys.INT_MIN);
-        
+
         local pos = player:getPosition();
-        
+
         if (not player.m_isGoalKeeper and pp ~= player) then
-        
+
             ai:setPassBallScore(0);
-            
+
             -- can shoot directly?
             if (self:canShootDirectly(player)) then
-            
+
                 ai:increasePassBallScore(50);
             end
-            
+
             local num = self:getNumberOfDefenderBetweenPlayerAndBall(player);
             ai:increasePassBallScore(-20 * num);
-            
+
             num = self:getNumberOfDefenderAroundPlayer(player);
             ai:increasePassBallScore(-10 * num);
-            
+
             local dist = pp:getPosition().getDistanceSq(pos);
             if (dist > sizeSq) then
-            
+
                 ai:increasePassBallScore((dist - sizeSq) * (-1));
             end
         end
-        
+
         if (pitch:getGridsAroundPosition(pos, gridsAroundPlayer)) then
-        
+
             for j = 1, #gridsAroundPlayer do
                 local gid = gridsAroundPlayer[j];
-            
+
                 pitch:increaseGridDefenceScore(gid, -10);
             end
         end
-        
+
     end
-    
+
     local side = getSide();
     local otherSide = pitch:getOtherSide(side);
     local otherTeam = g_matchManager:getTeam(otherSide);
     local teamMembers = otherTeam:getTeamMembers();
-    
+
     for i = 1, #teamMembers do
         local player = teamMembers[i];
-    
+
         if (pitch:getGridsAroundPosition(player:getPosition(), gridsAroundPlayer)) then
-        
+
             for j = 1, #gridsAroundPlayer do
                 local gid = gridsAroundPlayer[j];
-            
+
                 pitch:increaseGridDefenceScore(gid, -20);
             end
         end
@@ -247,30 +253,30 @@ end
 function FBTeam:updateFieldStatusOnDefend()
 end
 
-    
+
 function FBTeam:canShootDirectly(player)
     local side = getSide();
     local pitch = g_matchManager:getPitch();
     local otherSide = pitch:getOtherSide(side);
     local gp = pitch:getGoalPos(otherSide);
-    
+
     local otherTeam = g_matchManager:getTeam(otherSide);
     local teamMember = otherTeam:getTeamMembers();
     for i = 1, #teamMember do
         local t = teamMember[i];
-    
+
         if (matchDefs.isPointOnTheWay(player:getPosition(), gp, t:getPosition())) then
-        
+
             return false;
         end
     end
-    
+
     teamMember = self:getTeamMembers();
     for i = 1, #teamMember do
         local t = teamMember[i];
-    
+
         if (t ~= player and matchDefs.isPointOnTheWay(player:getPosition(), gp, t:getPosition())) then
-        
+
             return false;
         end
     end
@@ -278,33 +284,104 @@ function FBTeam:canShootDirectly(player)
 
 end
 
-function FBTeam:getNumberOfDefenderBetweenPlayerAndBall(CFBPlayer* player)
+function FBTeam:getNumberOfDefenderBetweenPlayerAndBall(player)
+    local side = getSide();
+    local pitch = g_matchManager:getPitch();
+    local otherSide = pitch:getOtherSide(side);
+    local gp = pitch:getGoalPos(otherSide);
+
+    local otherTeam = g_matchManager:getTeam(otherSide);
+    local teamMember = otherTeam:getTeamMembers();
+    for i = 1, #teamMember do
+        local t = teamMember[i];
+
+        if (matchDefs.isPointOnTheWay(player:getPosition(), gp, t:getPosition())) then
+
+            return false;
+        end
+    end
+
+    teamMember = getTeamMembers();
+    for i = 1, #teamMember do
+        local t = teamMember[i];
+        if (t ~= player and matchDefs.isPointOnTheWay(player:getPosition(), gp, t:getPosition())) then
+
+            return false;
+        end
+    end
+    return true;
+
 end
 
-function FBTeam:getNumberOfDefenderAroundPlayer(CFBPlayer* player)
+function FBTeam:getNumberOfDefenderAroundPlayer(player)
+    local num = 0;
+    local side = getSide();
+    local pitch = g_matchManager:getPitch();
+    local otherSide = pitch:getOtherSide(side);
+
+    local otherTeam = g_matchManager:getTeam(otherSide);
+    local teamMember = otherTeam:getTeamMembers();
+
+    local sizeSq = matchDefs.DEFENDER_PLAYER_RADIUS * matchDefs.DEFENDER_PLAYER_RADIUS;
+
+    for i = 1, #teamMember do
+        local t = teamMember[i];
+
+        local dist = t:getPosition().getDistanceSq(player:getPosition());
+        if (dist < sizeSq) then
+
+            num = num + 1;
+        end
+    end
+
+    return num;
+
 end
 
-    
-function FBTeam:setHilightPlayerId(int pid) { m_hilightPlayerId = pid;
+
+function FBTeam:setHilightPlayerId(pid) 
+    self.m_hilightPlayerId = pid;
 end
 
-function FBTeam:getHilightPlayerId() { return m_hilightPlayerId;
+function FBTeam:getHilightPlayerId()
+    return self.m_hilightPlayerId;
 end
 
-    
+
 function FBTeam:switchHilightPlayer()
+    self.m_hilightPlayerId = self.m_hilightPlayerId + 1;
+    if (self.m_hilightPlayerId >= self:getPlayerNumber()) then
+
+        self.m_hilightPlayerId = 1;
+    end
 end
 
-    
+
 function FBTeam:getPassBallTarget()
+    local max = constVar.Sys.INT_MIN;
+    local player = nil;
+
+    for i = 1, #self.m_teamMembers do
+        local p = self.m_teamMembers[i];
+
+        local score = p:getBrain():getPassBallScore();
+        if (score > max) then
+
+            max = score;
+            player = p;
+        end
+    end
+
+    return player;
+
 end
 
 
 function FBTeam:getSide()
+    return self.m_side;
 end
 
-    
-    
+
 return FBTeam
 
 
