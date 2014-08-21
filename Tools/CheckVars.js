@@ -117,8 +117,16 @@ function main() {
 	}
 }
 
+function test()
+{
+	var data = fs.readFileSync(FileList[0].lua[0], 'utf8');
 
-main();
+	var ret = data.match(/ctor\(\)(([\r|\n|\r\n].*){1,}|end[\r|\n|\r\n])/);
+	console.dir(ret);
+}
+
+test();
+// main();
 
 
 
