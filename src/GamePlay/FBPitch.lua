@@ -264,5 +264,34 @@ function FBPitch:getGoalPos(side)
     return pt;
 end
     
-    
+function FBPitch:getPitchWidth()
+    return self.m_width; 
+end
+
+
+function FBPitch:getPitchHeight()
+    return self.m_height; 
+end
+
+
+function FBPitch:getGridWidth()
+    return self.m_gridWidth;
+end
+
+
+function FBPitch:getGridHeight()
+    return self.m_gridHeight; 
+end
+
+
+function FBPitch:getGrids()
+    return self.m_grids;
+end
+
+
+function FBPitch:getGrid(index)
+    return self.m_grids[index];
+end
+
+
 return pitchClass

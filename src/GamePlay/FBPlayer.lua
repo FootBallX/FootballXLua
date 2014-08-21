@@ -116,6 +116,62 @@ function FBPlayer:getSpeed()
     
 end
 
+
+
+function FBPlayer:getBrain()
+
+    return self.m_brain;
+end
+
+
+function FBPlayer:getOwnerTeam()
+
+    return self.m_ownerTeam;
+end
+
+
+function FBPlayer:getPlayerCard() 
+    return self.m_playerCard; 
+end
+
+
+function FBPlayer:setPosition(pos)
+
+    self.m_curPosition = pos;
+    if (self.m_isBallController) then
+    
+        g_matchManager:setBallPosition(pos);
+    end
+end
+
+
+function FBPlayer:getPosition()  
+    return self.m_curPosition; 
+end
+
+
+function FBPlayer:setMovingVector(vec)
+
+    self.m_targetPosition = cc.p(0, 0);
+    self.m_movingVector = cc.p(vec.x, vec.y);
+end
+
+
+function FBPlayer:getMovingVector()  
+    return self.m_movingVector; 
+end
+
+
+function FBPlayer:setInstruction(ins)  
+    self.m_instruction = ins; 
+end
+
+
+function FBPlayer:getInstruction()  
+    return self.m_instruction; 
+end
+
+
 return FBPlayer
 
 

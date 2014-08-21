@@ -9,9 +9,9 @@ fs.readFile('CFuncVarToLua.txt', 'utf8', function(err, data) {
 	} else {
 		data = data.replace(/nullptr/g, 'nil');
 		data = data.replace(/->/g, ':');
-		data = data.replace(/auto/g, 'local');
+		data = data.replace(/\bauto\b/g, 'local');
 		data = data.replace(/local&/g, 'local');
-		data = data.replace(/int/g, 'local');
+		data = data.replace(/\bint\b/g, 'local');
 		data = data.replace(/float/g, 'local');
 		data = data.replace(/::/g, '.');
 		data = data.replace(/FBDefs/g, 'matchDefs');
@@ -21,6 +21,10 @@ fs.readFile('CFuncVarToLua.txt', 'utf8', function(err, data) {
 		data = data.replace(/&&/g, 'and');
 		data = data.replace(/\|\|/g, 'or');
 		data = data.replace(/this:/g, '');
+		data = data.replace(/\/\//g, '--');
+		data = data.replace(/\{/g, '');
+		data = data.replace(/\}/g, 'end');
+		data = data.replace(/\bFLT_MAX\b/g, 'constVar.Sys.numberMax');
 		console.log(data);
 	}
 });
