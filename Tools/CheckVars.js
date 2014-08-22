@@ -16,31 +16,30 @@ var FileList = [
 
 function trim(stri) { return stri.replace(/(^\s*)|(\s*$)/g, ""); } 
 
-function getFuncNameFromLua(l){
-	var regExp = /\bfunction\b.*:/;
-	if (regExp.test(l))
+function getVarNameFromLua(l){
+	l = trim(l);
+	var regExp = /^self\.(\w+)\s*=\s*.*$/;
+	var ret = l.match(regExp);
+	if (ret !== null)
 	{
-		l = l.replace(regExp, "");
-		l = l.replace(/\(.*/, "");
-		l = trim(l);
-		return l;
+		return ret[1];
 	}
 
-	return null
+	return null;
 }
 
-function getFuncNameFromCPP(l){
-	var regExp = /\s+\w+\(.*\)(\s*$|.*(;|\}))\s*$/;
+function getVarNameFromCPP(l){
 	l = l.replace(/\/\/.*/, "");
-	if (regExp.test(l))
+	l = trim(l);
+
+	var regExp = /\b(m_\w+).*;$/;
+	var ret = l.match(regExp);
+	if (ret !== null)
 	{
-		l = l.replace(/\(.*\).*/, "");
-		l = l.replace(/^.*\s/, "");
-		l = trim(l);
-		return l;
+		return ret[1];
 	}
 
-	return null
+	return null;
 }
 
 
@@ -86,10 +85,15 @@ function main() {
 
 		for (var j in files.lua) {
 			var data = fs.readFileSync(files.lua[j], 'utf8');
-			var lines = data.split('\n');
+			var ret = data.match(/ctor\(\).*?([\r\n|\n].*?)+?end[\r\n|\n]/m);
+			var lines;
+			if (ret !== null) {
+				lines = ret[0].split(/\r\n|\n/);
+			}
+
 			for (var k in lines)
 			{
-				var l = getFuncNameFromLua(lines[k]);
+				var l = getVarNameFromLua(lines[k]);
 				if (l !== null)
 				{
 					luaNames.push(l);
@@ -102,13 +106,14 @@ function main() {
 			var lines = data.split('\n');
 			for (var k in lines)
 			{
-				var l = getFuncNameFromCPP(lines[k]);
+				var l = getVarNameFromCPP(lines[k]);
 				if (l !== null)
 				{
 					cppNames.push(l);
 				}
 			}
 		}
+
 
 		var res = compareNames(luaNames, cppNames);
 		console.log('------------------');
@@ -117,16 +122,7 @@ function main() {
 	}
 }
 
-function test()
-{
-	var data = fs.readFileSync(FileList[0].lua[0], 'utf8');
-
-	var ret = data.match(/ctor\(\)(([\r|\n|\r\n].*){1,}|end[\r|\n|\r\n])/);
-	console.dir(ret);
-}
-
-test();
-// main();
+main();
 
 
 

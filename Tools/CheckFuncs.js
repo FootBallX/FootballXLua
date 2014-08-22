@@ -17,27 +17,23 @@ var FileList = [
 function trim(stri) { return stri.replace(/(^\s*)|(\s*$)/g, ""); } 
 
 function getFuncNameFromLua(l){
-	var regExp = /\bfunction\b.*:/;
-	if (regExp.test(l))
+	var regExp = /\bfunction\b.*:\s*(\w+)\s*\(/;
+	var ret = l.match(regExp);
+	if (ret !== null)
 	{
-		l = l.replace(regExp, "");
-		l = l.replace(/\(.*/, "");
-		l = trim(l);
-		return l;
+		return ret[1];
 	}
 
 	return null
 }
 
 function getFuncNameFromCPP(l){
-	var regExp = /\s+\w+\(.*\)(\s*$|.*(;|\}))\s*$/;
+	var regExp = /\s+(\w+)\(.*\)(\s*$|.*(;|\}))\s*$/;
+	var ret = l.match(regExp);
 	l = l.replace(/\/\/.*/, "");
-	if (regExp.test(l))
+	if (ret !== null)
 	{
-		l = l.replace(/\(.*\).*/, "");
-		l = l.replace(/^.*\s/, "");
-		l = trim(l);
-		return l;
+		return ret[1];
 	}
 
 	return null
@@ -96,6 +92,7 @@ function main() {
 				}
 			}
 		}
+
 
 		for (var j in files.cpp) {
 			var data = fs.readFileSync(files.cpp[j], 'utf8');

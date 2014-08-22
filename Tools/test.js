@@ -1,9 +1,8 @@
- var s =  '#endif /* defined(__FootBallX__CFBPitch__) */';
 
- var s1  = ' void setGridDrawNode(int index, DrawNode* node)  //adasf';
+var regExp = /\s+(\w+)\(.*\)(\s*$|.*(;|\}))\s*$/;
 
-var regExp = /\s+\w+\(.*\)(\s*$|.*(;|\}))\s*$/;
+var s = 'virtual CFBInstructionResult& getInstructionResult() {return 0;}';
 
-s1 = s1.replace(/\/\/.*/, "");
+var ret = s.match(regExp);
 
- console.dir(regExp.exec(s1));
+console.dir(ret);
