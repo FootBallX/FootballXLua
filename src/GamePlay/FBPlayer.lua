@@ -2,25 +2,22 @@
 local FBPlayer = class("FBPlayer")
 
 function FBPlayer:ctor(team, card)
-    self.m_positionInFormation = -1;
-    self.m_distanceFromBall = matchDefs.Sys.numberMax;
-    self.m_radiusOfOrbit = 0.0;
-    self.m_isBallController = false;
-    self.m_isGoalKeeper = false;
-    self.m_brain = nil;
+    self.m_positionInFormation = -1; --     int m_positionInFormation = -1;',
+    self.m_distanceFromBall = constVar.Sys.numberMax; --     float m_distanceFromBall = FLT_MAX;',
+    self.m_radiusOfOrbit = 0.0; --     float m_radiusOfOrbit = 0.f;',
+    self.m_isBallController = false; --     bool m_isBallController = false;',
+    self.m_isGoalKeeper = false; --     bool m_isGoalKeeper = false;',
+    self.m_brain = nil; --     CFBPlayerAI* m_brain = nullptr;',
+    self.m_curPosition = cc.p(0, 0); --     cocos2d::Point m_curPosition;',
+    self.m_movingVector = cc.p(0, 0); --     cocos2d::Point m_movingVector;      // 运动方向',
+    self.m_targetPosition = cc.p(0, 0); --     cocos2d::Point m_targetPosition;',
+    self.m_instruction = matchDefs.PLAYER_INS.NONE; --     FBDefs::PLAYER_INS m_instruction;',
+    self.m_stunTime = 0.0; --     float m_stunTime = 0.f;',
+    self.m_ownerTeam = team; --     CFBTeam* m_ownerTeam = nullptr;',
+    self.m_playerCard = card; --     CFBCard m_playerCard;',
+    self.m_speedCache = -constVar.Sys.numberMax; --     float m_speedCache = -FLT_MAX;',
+    self.m_speedScale = 1.0; --     float m_speedScale = 1.f;' ],
 
-    self.m_curPosition = cc.p(0, 0)
-    self.m_movingVector = cc.p(0, 0);      -- 运动方向
-    self.m_targetPosition = cc.p(0, 0);
-  
-    self.m_instruction = matchDefs.PLAYER_INS.NONE;
-  
-    self.m_stunTime = 0.0;
-    self.m_ownerTeam = team;
-    self.m_playerCard = card;
-
-    self.m_speedCache = -MatchDefs.Sys.numberMax;
-    self.m_speedScale = 1.0;
 end
 
 function FBPlayer:update(dt)

@@ -12,13 +12,16 @@ local SIDE =
     "OPP",        -- 对方
     "NONE",
 };
+
+local HDVector = require("Utils.HDVector");
+local MD = MatchDefs;
     
 local MatchManager = class("MatchManager")
 
 function MatchManager:ctor()
     cclog("MatchManager ctor")
     self.m_pitch = nil
-    self.m_ballPosition = cc.p(0, 0)
+
     self.m_matchUI = nil
     self.m_proxy = nil
     
@@ -27,10 +30,10 @@ function MatchManager:ctor()
     self.m_playerDistanceSq = constVar.Sys.numberMax;
     self.m_encounterTime = constVar.Sys.numberMax;
     
-    self.m_menuType = MatchDefs.MENU_TYPE.NONE;
+    self.m_menuType = MD.MENU_TYPE.NONE;
     self.m_isAir = false;
     
-    self.m_recentEndedFlow = MatchDefs.MATCH_FLOW_TYPE.NONE;
+    self.m_recentEndedFlow = MD.MATCH_FLOW_TYPE.NONE;
     
     self.m_defendPlayerIds = {};
     HDVector.extend(self.m_defendPlayerIds);
@@ -41,13 +44,26 @@ function MatchManager:ctor()
 
     self.m_isPause = false;
     
-    self.m_controlSide = MatchDefs.SIDE.NONE;
+    self.m_controlSide = MD.SIDE.NONE;
     
     self.m_vecFromUser = cc.p(0, 0);        -- 玩家当前操作的缓存
+
+    self.m_ball = nil; --     CFBBall* m_ball = nullptr;',
+    self.m_playerInstructions = {}; HDVector.extend(self.m_playerInstructions); --     vector<FBDefs::MENU_ITEMS> m_playerInstructions;    // 玩家指令',
+    self.m_attackPlayerNumbers = {}; HDVector.extend(self.m_attackPlayerNumbers); --     vector<int> m_attackPlayerNumbers;',
+    self.m_defendPlayerNumbers = {}; HDVector.extend(self.m_defendPlayerNumbers); --     vector<int> m_defendPlayerNumbers;',
+    self.m_targetPlayerId = -1; --     int m_targetPlayerId = -1;       // 仅传球时候有效，传球对象\'',
+    self.m_playAnimIndex = 0; --     int m_playAnimIndex = 0;',
+    self.m_SYNC_TIME = 1.0; --     const float m_SYNC_TIME = 1.0f;',
+    self.m_instructionResult = nil; --     CFBInstructionResult m_instructionResult;',
+    self.m_teamsInMatch = {}; HDVector.extend(self.m_teamsInMatch); --     CFBTeam* m_teamsInMatch[(int)SIDE::NONE];       // 这里重新组织一下，按照己方和对方保存team',
+    self.m_syncTime = {}; HDVector.extend(self.m_syncTime); --     float m_syncTime[(int)SIDE::NONE];',
+    self.m_startTime = 0; --     unsigned int m_startTime = 0;',
+    self.m_matchStep = MD.MATCH_STEP.NONE; --     FBDefs::MATCH_STEP m_matchStep = FBDefs::MATCH_STEP::NONE;' ],
 end
 
 function MatchManager:init(pitchWidth, pitchHeight, matchUI, proxy)
-    self.m_pitch = require("GamePlay.FBPitch")
+    self.m_pitch = require("GamePlay.FBPitch").new();
     self.m_matchUI = matchUI
     
     self.m_proxy = proxy;
@@ -57,12 +73,12 @@ function MatchManager:init(pitchWidth, pitchHeight, matchUI, proxy)
         return false;
     end
 
-    self.m_teams[0] = new CFBTeam(matchDefs.SIDE.LEFT);
-    self.m_teams[1] = new CFBTeam(matchDefs.SIDE.RIGHT);
+    self.m_teams[0] = require("GamePlay.FBTeam").new(MD.SIDE.LEFT);
+    self.m_teams[1] = require("GamePlay.FBTeam").new(MD.SIDE.RIGHT);
 
-    self.m_playerDistanceSq = matchDefs.PLAYER_DISTANCE * matchDefs.PLAYER_DISTANCE;
+    self.m_playerDistanceSq = MD.PLAYER_DISTANCE * MD.PLAYER_DISTANCE;
 
-    self.m_matchStep = matchDefs.MATCH_STEP.WAIT_START;
+    self.m_matchStep = MD.MATCH_STEP.WAIT_START;
 
     return true;
 end
@@ -71,17 +87,17 @@ end
 function MatchManager:update(dt)
     self.m_proxy:update(dt);
 
-    if self.m_matchStep == matchDefs.MATCH_STEP.WAIT_START then
+    if self.m_matchStep == MD.MATCH_STEP.WAIT_START then
         
-    elseif self.m_matchStep == matchDefs.MATCH_STEP.COUNT_DOWN then
+    elseif self.m_matchStep == MD.MATCH_STEP.COUNT_DOWN then
     
         local delta = self.m_startTime - self.m_proxy:getTime();
         if (delta <= 0) then
         
-            self.m_matchStep = matchDefs.MATCH_STEP.MATCHING;
+            self.m_matchStep = MD.MATCH_STEP.MATCHING;
         end
     
-    elseif self.m_matchStep == matchDefs.MATCH_STEP.MATCHING then
+    elseif self.m_matchStep == MD.MATCH_STEP.MATCHING then
     
         if (not self.m_isPause) then
         
@@ -117,7 +133,7 @@ function MatchManager:update(dt)
             
             self.m_syncTime[i] = self.m_syncTime[i] - dt;
         end
-    elseif self.m_matchStep == matchDefs.MATCH_STEP.PLAY_ANIM then
+    elseif self.m_matchStep == MD.MATCH_STEP.PLAY_ANIM then
     end
 end
     
@@ -166,14 +182,14 @@ function MatchManager:getOtherTeam(team)
 end
    
 function MatchManager:getAttackingTeam()
-    local team = getTeam(matchDefs.SIDE.LEFT);
+    local team = getTeam(MD.SIDE.LEFT);
     local player = team:getHilightPlayer();
     if (player ~= nil and player.m_isBallController) then
     
         return team;
     end
     
-    team = getTeam(matchDefs.SIDE.RIGHT);
+    team = getTeam(MD.SIDE.RIGHT);
     player = team:getHilightPlayer();
     if (player and playe.m_isBallController) then
     
@@ -186,14 +202,14 @@ end
 
 
 function MatchManager:getDefendingTeam()
-    local team = self:getTeam(matchDefs.SIDE.LEFT);
+    local team = self:getTeam(MD.SIDE.LEFT);
     local player = team:getHilightPlayer();
     if (not player or not player.m_isBallController) then
     
         return team;
     end
     
-    team = getTeam(matchDefs.SIDE.RIGHT);
+    team = getTeam(MD.SIDE.RIGHT);
     player = team:getHilightPlayer();
     if (not player or not player.m_isBallController) then
     
@@ -208,7 +224,7 @@ end
 function MatchManager:isBallOnTheSide(side)
     local pos = self:getBallPosition();
     local pitch = self:getPitch();
-    if (side == matchDefs.SIDE.LEFT) then
+    if (side == MD.SIDE.LEFT) then
     
         return pos.x < pitch:getPitchWidth() * 0.5;
     
@@ -231,7 +247,7 @@ function MatchManager:getBallPosRateBySide(side)
     local pos = self:getBallPosition();
     local pitch = self:getPitch();
     local rate = pos.x / pitch:getPitchWidth();
-    if (side == matchDefs.SIDE.RIGHT) then
+    if (side == MD.SIDE.RIGHT) then
     
         rate = 1 - rate;
     end
@@ -273,15 +289,15 @@ function MatchManager:tryPassBall(from, to)
         local roll = RANDOM_MGR:getRand() % 300;
         if (roll > 200) then
         
-            pO:setInstruction(matchDefs.PLAYER_INS.TAKCLE);
+            pO:setInstruction(MD.PLAYER_INS.TAKCLE);
         
         elseif (roll > 100) then
         
-            pO:setInstruction(matchDefs.PLAYER_INS.INTERCEPT);
+            pO:setInstruction(MD.PLAYER_INS.INTERCEPT);
         
         else
         
-            pO:setInstruction(matchDefs.PLAYER_INS.BLOCK);
+            pO:setInstruction(MD.PLAYER_INS.BLOCK);
         end
         
         self.m_currentInstruction:addPlayer(pO);
@@ -300,7 +316,7 @@ function MatchManager:tryPassBall(from, to)
             if (it == nil) then
             
                 local ppos = player:getPosition();
-                if (matchDefs.isPointOnTheWay(fpos, tpos, ppos)) then
+                if (MD.isPointOnTheWay(fpos, tpos, ppos)) then
                 
                     local dist = cc.pGetDistance(fpos, ppos);
                     involvePlayers.push_back({dist = dist,player = player});
@@ -319,15 +335,15 @@ function MatchManager:tryPassBall(from, to)
         local roll = math.random(0, 300);
         if (roll > 200) then
         
-            pO:setInstruction(matchDefs.PLAYER_INS.TAKCLE);
+            pO:setInstruction(MD.PLAYER_INS.TAKCLE);
         
         elseif (roll > 100) then
         
-            pO:setInstruction(matchDefs.PLAYER_INS.INTERCEPT);
+            pO:setInstruction(MD.PLAYER_INS.INTERCEPT);
         
         else
         
-            pO:setInstruction(matchDefs.PLAYER_INS.BLOCK);
+            pO:setInstruction(MD.PLAYER_INS.BLOCK);
         end
         self.m_currentInstruction:addPlayer(pO);
     end
@@ -353,7 +369,7 @@ end
 
 function MatchManager:onAnimationEnd()
     cclog("AnimaitonEnd");
-    if (matchDefs.MATCH_STEP.PLAY_ANIM == self.m_matchStep) then
+    if (MD.MATCH_STEP.PLAY_ANIM == self.m_matchStep) then
     
         self.m_playAnimIndex = self.m_playAnimIndex + 1;
         self:playAnimInInstructionsResult();
@@ -371,7 +387,7 @@ function MatchManager:playAnimInInstructionsResult()
             for i = 1, #ins.animations do
                 local ani = ins.animations[i];
 
-                self.m_matchUI:onPlayAnimation(matchDefs.g_aniNames[ani.aniId], ani.delay);
+                self.m_matchUI:onPlayAnimation(MD.g_aniNames[ani.aniId], ani.delay);
             end
             break;
         
@@ -504,7 +520,7 @@ end
 function MatchManager:startMatchAck(st)
 
     cclog("diff: %d", st - self.m_proxy:getTime());
-    self.m_matchStep = matchDefs.MATCH_STEP.COUNT_DOWN;
+    self.m_matchStep = MD.MATCH_STEP.COUNT_DOWN;
     
     self.m_startTime = st;
     
@@ -566,7 +582,7 @@ end
 
 function MatchManager:instructionResultAck()
 
-    self.m_matchStep = matchDefs.MATCH_STEP.PLAY_ANIM;
+    self.m_matchStep = MD.MATCH_STEP.PLAY_ANIM;
     self.m_playAnimIndex = 0;
 
     self:playAnimInInstructionsResult();
@@ -589,7 +605,7 @@ end
 function MatchManager:resumeMatch()
 
     self:pauseGame(false);
-    self.m_matchStep = matchDefs.MATCH_STEP.MATCHING;
+    self.m_matchStep = MD.MATCH_STEP.MATCHING;
     if (self.m_teamsInMatch[SIDE.SELF]:isAttacking()) then
     
         self.m_matchUI:showAttackMenu(true);
@@ -614,13 +630,13 @@ function MatchManager:updateEncounter(dt)
 
     self.m_encounterTime = self.m_encounterTime - dt;
     
-    if (self.m_menuType ~= matchDefs.MENU_TYPE.NONE) then
+    if (self.m_menuType ~= MD.MENU_TYPE.NONE) then
     
         if (self.m_encounterTime < 0) then
         
             self.m_encounterTime = constVar.Sys.numberMax;
             
-            self.m_menuType = matchDefs.MENU_TYPE.NONE;
+            self.m_menuType = MD.MENU_TYPE.NONE;
         end
     else
     
@@ -628,7 +644,7 @@ function MatchManager:updateEncounter(dt)
         self:checkEncounterInDribble();
         self:checkEncounterInPenaltyArea();
         
-        self.m_recentEndedFlow = matchDefs.MATCH_FLOW_TYPE.NONE;
+        self.m_recentEndedFlow = MD.MATCH_FLOW_TYPE.NONE;
     end
 end
 
@@ -637,7 +653,7 @@ end
 
 function MatchManager:checkEncounterInDribble()
 
-    if (self.m_menuType ~= matchDefs.MENU_TYPE.NONE) then
+    if (self.m_menuType ~= MD.MENU_TYPE.NONE) then
         return;
     end
     
@@ -648,20 +664,20 @@ function MatchManager:checkEncounterInDribble()
         
             self.m_encounterTime = -1;
         
-        elseif (self.m_encounterTime > matchDefs.PLAYER_ENCOUNTER_TRIGGER_TIME) then
+        elseif (self.m_encounterTime > MD.PLAYER_ENCOUNTER_TRIGGER_TIME) then
         
-            self.m_encounterTime = matchDefs.PLAYER_ENCOUNTER_TRIGGER_TIME;
+            self.m_encounterTime = MD.PLAYER_ENCOUNTER_TRIGGER_TIME;
         end
         
         local team = self:getControlSideTeam();
         if (team:isAttacking()) then
         
-            self.m_menuType = matchDefs.MENU_TYPE.ENCOUNTER_ATK_G;
+            self.m_menuType = MD.MENU_TYPE.ENCOUNTER_ATK_G;
             self.m_involvePlayerIds.clear();
             self.m_involvePlayerIds.push_back(team:getHilightPlayerId());
         else
         
-            self.m_menuType = matchDefs.MENU_TYPE.ENCOUTNER_DEF_G;
+            self.m_menuType = MD.MENU_TYPE.ENCOUTNER_DEF_G;
             self.m_involvePlayerIds.clear();
             for i = 1, #self.m_defendPlayerIds do
                 local p = self.m_defendPlayerIds[i];
@@ -674,7 +690,7 @@ function MatchManager:checkEncounterInDribble()
     
         self.m_encounterTime = constVar.Sys.numberMax;
         
-        self.m_menuType = matchDefs.MENU_TYPE.NONE;
+        self.m_menuType = MD.MENU_TYPE.NONE;
     end
 end
 
@@ -683,11 +699,11 @@ end
 function MatchManager:checkEncounterInPenaltyArea()
 
     -- TODO: 仅当传球，二过一，随机球 刚刚结束，否则直接返回。二过一和随机球还未做判断
-    if (self.m_recentEndedFlow ~= matchDefs.MATCH_FLOW_TYPE.PASSBALL) then
+    if (self.m_recentEndedFlow ~= MD.MATCH_FLOW_TYPE.PASSBALL) then
         return;
     end
     
-    if (self.m_menuType ~= matchDefs.MENU_TYPE.NONE) then
+    if (self.m_menuType ~= MD.MENU_TYPE.NONE) then
         return;
     end
 
@@ -703,13 +719,13 @@ function MatchManager:checkEncounterInPenaltyArea()
         local conTeam = getControlSideTeam();
         if (conTeam:isAttacking()) then
         
-            self.m_menuType = matchDefs.MENU_TYPE.ENCOUNTER_ATK_OPPSITE_A;
+            self.m_menuType = MD.MENU_TYPE.ENCOUNTER_ATK_OPPSITE_A;
             self.m_involvePlayerIds.clear();
             self.m_involvePlayerIds.push_back(conTeam:getHilightPlayerId());
 
         else
         
-            self.m_menuType = matchDefs.MENU_TYPE.ENCOUNTER_DEF_SELF_A;
+            self.m_menuType = MD.MENU_TYPE.ENCOUNTER_DEF_SELF_A;
             self.m_involvePlayerIds.clear();
             for i = 1, #self.m_defendPlayerIds do
                 local p = self.m_defendPlayerIds[i];

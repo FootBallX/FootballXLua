@@ -28,6 +28,8 @@ local function main()
     cc.FileUtils:getInstance():addSearchPath("res/Assets")
     cc.Director:getInstance():getOpenGLView():setDesignResolutionSize(960, 640, 0)
 
+    require "GamePlay.MatchDefs";
+    MatchDefs.Init();
     --create scene 
     local scene = require("loginLayer")
     local gameScene = scene.create()

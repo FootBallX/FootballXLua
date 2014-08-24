@@ -1,3 +1,6 @@
+require"GamePlay.MatchDefs"
+
+local MD = MatchDefs;
 
 Test = class("Test")
 
@@ -11,7 +14,7 @@ end
 
 
 function Test:A()
-    return false and 1 or 2;
+    return MD.FORMATION;
 end
 
 

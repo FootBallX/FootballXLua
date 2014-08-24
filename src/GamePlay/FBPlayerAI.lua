@@ -13,7 +13,7 @@ FBPlayerAI = class("FBPlayerAI")
 --end
     
 
-function FBPlayerAI:ator()
+function FBPlayerAI:ctor()
     self.m_team = nil;
     self.m_player = nil;
     self.m_origHomePosition = cc.p(0, 0);
@@ -29,6 +29,9 @@ function FBPlayerAI:ator()
     self.m_passBallScore = 0;
     
     self.m_aiType = matchDefs.AI_CLASS.NONE;
+
+    self.m_supportState = matchDefs.AI_STATE_SUPPORT.FIND_POS;      --     FBDefs::AI_STATE_SUPPORT m_supportState = FBDefs::AI_STATE_SUPPORT::FIND_POS;'
+
 end
 
 

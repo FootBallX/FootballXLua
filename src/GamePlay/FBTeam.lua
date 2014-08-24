@@ -1,9 +1,12 @@
 
 local FBTeam = class("FBTeam")
+local HDVector = require("Utils.HDVector");
+local MD = MatchDefs;
 
-function FBTeam:ctor()
-    self.m_side = matchDefs.SIDE.NONE;
-    self.m_state = matchDefs.TEAM_STATE.NONE;
+
+function FBTeam:ctor(side)
+    self.m_side = side;
+    self.m_state = MD.TEAM_STATE.DEFENDING;
     self.m_teamMembers = {}
     HDVector.extend(self.m_teamMembers)
     

@@ -43,9 +43,67 @@ function getVarNameFromCPP(l){
 }
 
 
-function compareNames(l1, l2){
+function convert(data) {
+	data = data.replace(/nullptr/g, 'nil');
+	data = data.replace(/->/g, ':');
+	data = data.replace(/\bauto\b/g, 'local');
+	data = data.replace(/local&/g, 'local');
+	data = data.replace(/\bint\b/g, 'local');
+	data = data.replace(/float/g, 'local');
+	data = data.replace(/::/g, '.');
+	data = data.replace(/FBDefs/g, 'matchDefs');
+	data = data.replace(/m_/g, 'self.m_');
+	data = data.replace(/FBMATCH/g, 'g_matchManager');
+	data = data.replace(/!=/g, '~=');
+	data = data.replace(/&&/g, 'and');
+	data = data.replace(/\|\|/g, 'or');
+	data = data.replace(/this:/g, '');
+	data = data.replace(/\/\//g, '--');
+	data = data.replace(/\{/g, '');
+	data = data.replace(/\}/g, 'end');
+	data = data.replace(/\bFLT_MAX\b/g, 'constVar.Sys.numberMax');
+
+	return data;
+}
+
+
+function makeLuaVar(data) {
+	var lua = data.right;
+	var refer = data.refer;
+	
+	for (var i in lua) {
+		var s = 'self.' + lua[i];
+		var r = refer[i];
+		var res = r.match(/\bvector<.*>.*;/);
+		if (res !== null)
+		{
+			s += ' = {}; HDVector.extend(self.' + lua[i] + ');';
+		}
+		else
+		{
+			res = r.match(/.*=\s*(.*)\s*;/);
+			if (res !== null)
+			{
+				var t = res[1];
+				t = convert(t);
+				s += ' = ' + t + ';';
+			}
+		}
+
+		s += ' -- ' + refer[i];
+
+		lua[i] = s;
+	}
+
+	data.right = lua;
+	data.refer = null;
+}
+
+
+function compareNames(l1, l2, l3){
 	var diffL = [];
 	var diffR = [];
+	var refer = [];
 	for (var i in l1) {
 		var found = false;
 		for (var j in l2) {
@@ -71,21 +129,23 @@ function compareNames(l1, l2){
 
 		if (!found) {
 			diffR.push(l2[j]);
+			refer.push(l3[j]);
 		}
 	}
 
-	return {left:diffL, right:diffR};
+	return {left:diffL, right:diffR, refer:refer};
 }
 
 function main() {
 	for (var i in FileList) {
 		var luaNames = [];
 		var cppNames = [];
+		var cppLines = [];
 		var files = FileList[i];
 
 		for (var j in files.lua) {
 			var data = fs.readFileSync(files.lua[j], 'utf8');
-			var ret = data.match(/ctor\(\).*?([\r\n|\n].*?)+?end[\r\n|\n]/m);
+			var ret = data.match(/ctor\(.*\).*?([\r\n|\n].*?)+?end[\r\n|\n]/m);
 			var lines;
 			if (ret !== null) {
 				lines = ret[0].split(/\r\n|\n/);
@@ -110,12 +170,14 @@ function main() {
 				if (l !== null)
 				{
 					cppNames.push(l);
+					cppLines.push(lines[k]);
 				}
 			}
 		}
 
 
-		var res = compareNames(luaNames, cppNames);
+		var res = compareNames(luaNames, cppNames, cppLines);
+		makeLuaVar(res);
 		console.log('------------------');
 		console.log(files.lua);
 		console.dir(res);

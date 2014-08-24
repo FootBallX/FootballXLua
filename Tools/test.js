@@ -1,8 +1,6 @@
 
-var regExp = /\s+(\w+)\(.*\)(\s*$|.*(;|\}))\s*$/;
+var r = 'unsigned int m_startTime = 0;		// dafa';
 
-var s = 'virtual CFBInstructionResult& getInstructionResult() {return 0;}';
+var res = r.match(/.*=\s*(.*)\s*;/);
 
-var ret = s.match(regExp);
-
-console.dir(ret);
+console.dir(res);

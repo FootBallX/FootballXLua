@@ -1,7 +1,34 @@
 require "Cocos2d"
 require "Cocos2dConstants"
 
+local function CreatEnumTable(tbl, index) 
+    local enumtbl = {} 
+    local enumindex = index or 0 
+    for i, v in ipairs(tbl) do 
+        enumtbl[v] = enumindex + i 
+    end 
+    return enumtbl 
+end 
+
+
 MatchDefs = {
+    Init = function()
+        MatchDefs.FORMATION = CreatEnumTable(MatchDefs.FORMATION);
+        MatchDefs.MATCH_STEP = CreatEnumTable(MatchDefs.MATCH_STEP)
+        MatchDefs.SIDE = CreatEnumTable(MatchDefs.SIDE)
+        MatchDefs.TEAM_STATE = CreatEnumTable(MatchDefs.TEAM_STATE)
+        MatchDefs.AI_CLASS = CreatEnumTable(MatchDefs.AI_CLASS)
+        MatchDefs.AI_STATE = CreatEnumTable(MatchDefs.AI_STATE)
+        MatchDefs.AI_STATE_SUPPORT = CreatEnumTable(MatchDefs.AI_STATE_SUPPORT)
+        MatchDefs.AI_STATE_CONTROL = CreatEnumTable(MatchDefs.AI_STATE_CONTROL)
+        MatchDefs.PLAYER_INS = CreatEnumTable(MatchDefs.PLAYER_INS)
+        MatchDefs.JS_RET_VAL = CreatEnumTable(MatchDefs.JS_RET_VAL)
+        MatchDefs.MENU_TYPE = CreatEnumTable(MatchDefs.MENU_TYPE)
+        MatchDefs.MENU_ITEMS = CreatEnumTable(MatchDefs.MENU_ITEMS)
+        MatchDefs.GAME_EVENT = CreatEnumTable(MatchDefs.GAME_EVENT)
+        MatchDefs.MATCH_FLOW_TYPE = CreatEnumTable(MatchDefs.MATCH_FLOW_TYPE)
+    end,
+
     STUN_TIME = 2.0,
     MAX_CARD_ICON_LEN = 32,
     PITCH_POINT_ALMOST_EQUAL_DISTANCE = 4.0,
