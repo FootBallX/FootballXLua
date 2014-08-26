@@ -39,7 +39,7 @@ function matchLayer:ctor()
 end
 
 function matchLayer:init()
-    g_matchManager:init(1000, 600, self, require("GamePlay.NetProxy"))
+    g_matchManager:init(1000, 600, self, require("GamePlay.NetProxy").new())
     local function update(dt)
     end
 

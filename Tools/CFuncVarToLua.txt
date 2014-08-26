@@ -1,8 +1,240 @@
-    int getPitchWidth() const { return m_width; }
-    int getPitchHeight() const { return m_height; }
-    
-    int getGridWidth() const { return m_gridWidth; }
-    int getGridHeight() const { return m_gridHeight; }
+void CFBMatchProxyNet::onSync(Node*, void* resp)
+{
+    CCPomeloReponse* ccpomeloresp = (CCPomeloReponse*)resp;
 
-    const vector<CFBPitchGrid>& getGrids() const { return m_grids; }
-    const CFBPitchGrid& getGrid(int index) const { return m_grids[index]; }
+    CJsonT docs(ccpomeloresp->docs);
+
+    vector<float> v;
+    CJsonTArray ja(docs.getChild("teamPos"));
+    auto size = ja.size();
+    for (int i = 0; i < size; ++i)
+    {
+        v.push_back(ja.get(i).toFloat());
+    }
+    
+    m_match->teamPositionAck(docs.getInt("side"), v, docs.getInt("ballPosPlayerId"), docs.getUInt("timeStamp"));
+
+}
+
+
+
+void CFBMatchProxyNet::onStartMatch(Node*, void* r)
+{
+    CCPomeloReponse* ccpomeloresp = (CCPomeloReponse*)r;
+    CJsonT docs(ccpomeloresp->docs);
+    
+    m_match->startMatchAck(docs.getUInt("startTime"));
+}
+
+
+
+void CFBMatchProxyNet::onEndMatch(Node*, void* r)
+{
+    m_match->endMatchAck();
+}
+
+
+
+void CFBMatchProxyNet::onTriggerMenu(Node*, void* r)
+{
+    CCPomeloReponse* ccpomeloresp = (CCPomeloReponse*)r;
+    CJsonT docs(ccpomeloresp->docs);
+    
+    int type = docs.getInt("menuType");
+    if (type == (unsigned int)FBDefs::MENU_TYPE::NONE)
+    {
+        // show the waiting interface.
+        return;
+    }
+    
+    CC_ASSERT(type >= 0 && type < (unsigned int)FBDefs::MENU_TYPE::NONE);
+    
+    vector<int> av;
+    vector<int> dv;
+    {
+        CJsonTArray ja(docs.getChild("attackPlayers"));
+        CC_ASSERT(ja.size() > 0);
+        for (int i = 0; i < ja.size(); ++i)
+        {
+            av.push_back(ja.get(i).toInt());
+        }
+    }
+    {
+        CJsonTArray ja(docs.getChild("defendplayers"));
+        CC_ASSERT(ja.size() > 0);
+        vector<int> v;
+        for (int i = 0; i < ja.size(); ++i)
+        {
+            dv.push_back(ja.get(i).toInt());
+        }
+    }
+    
+    m_match->triggerMenuAck((FBDefs::MENU_TYPE)type, av, dv);
+}
+
+
+
+void CFBMatchProxyNet::onInstructionResult(Node*, void* r)
+{
+    CFBInstructionResult& res = m_match->getInstructionResult();
+    res.instructions.clear();
+    
+    CCPomeloReponse* ccpomeloresp = (CCPomeloReponse*)r;
+    CJsonT docs(ccpomeloresp->docs);
+    
+    CJsonTArray ja(docs.getChild("instructions"));
+    for (size_t i = 0; i < ja.size(); ++i)
+    {
+        auto ins = ja.get(i);
+        res.instructions.push_back(
+                                   CFBInstructionResult::InsStructure(
+                                                                      ins.getInt("side"),
+                                                                      ins.getInt("playerNumber"),
+                                                                      ins.getInt("ins"),
+                                                                      ins.getInt("result")
+                                                                      )
+                                   );
+        
+        auto& insStru = res.instructions[i];
+        
+        CJsonTArray animsJson(ins.getChild("animations"));
+        for (size_t j = 0; j < animsJson.size(); ++j)
+        {
+            auto animObj = animsJson.get(j);
+            insStru.animations.push_back(
+                                         CFBInstructionResult
+                                         ::InsStructure
+                                         ::Animation(
+                                                     animObj.getInt("animId"),
+                                                     animObj.getFloat("delay")
+                                                     )
+                                         );
+        }
+    }
+    
+    res.ballSide = docs.getInt("ballSide");
+    res.playerNumber = docs.getInt("playerNumber");
+    res.ballPosX = docs.getFloat("ballPosX");
+    res.ballPosY = docs.getFloat("ballPosY");
+    
+    m_match->instructionResultAck();
+}
+
+
+
+void CFBMatchProxyNet::onGetMatchInfo(Node*, void* r)
+{
+    CCPomeloReponse* ccpomeloresp = (CCPomeloReponse*)r;
+    CJsonT docs(ccpomeloresp->docs);
+    
+    CJsonTArray left(docs.getChild("left"));
+    CJsonTArray right(docs.getChild("right"));
+
+    unsigned int u1 = docs.getUInt("leftUid");
+    unsigned int u2 = docs.getUInt("rightUid");
+    
+    FBDefs::SIDE side = FBDefs::SIDE::NONE;
+    FBDefs::SIDE kickOffSide = FBDefs::SIDE::LEFT;
+    
+    if (u1 == PLAYER_INFO->getUID())
+    {
+        side = FBDefs::SIDE::LEFT;
+    }
+    else if (u2 == PLAYER_INFO->getUID())
+    {
+        side = FBDefs::SIDE::RIGHT;
+    }
+    else
+    {
+        CC_ASSERT(false);
+    }
+    
+    if ( 1 == docs.getInt("kickOffSide"))
+    {
+        kickOffSide = FBDefs::SIDE::RIGHT;
+    }
+    
+    int kickOffPlayer = docs.getInt("kickOffPlayer");
+    
+    int size = (int)left.size();
+    CC_ASSERT(size == right.size());
+    
+    CFBPlayerInitInfo info;
+    for (int i = 0; i < size; ++i)
+    {
+        {
+            CJsonT player(left.get(i));
+            auto& card = info.card;
+            card.m_cardID = player.getUInt("pcId");
+            card.m_speed = player.getFloat("speed");
+            strncpy(card.m_icon, player.getString("icon"), FBDefs::MAX_CARD_ICON_LEN - 1);
+            card.m_strength = player.getFloat("strength");
+            card.m_dribbleSkill = player.getFloat("dribbleSkill");
+            card.m_passSkill = player.getFloat("passSkill");
+            card.m_shootSkill = player.getFloat("shootSkill");
+            card.m_defenceSkill = player.getFloat("defenceSkill");
+            card.m_attackSkill = player.getFloat("attackSkill");
+            card.m_groundSkill = player.getFloat("groundSkill");
+            card.m_airSkill = player.getFloat("airSkill");
+            CJsonT position(player.getChild("position"));
+            info.position.x = position.getFloat("x");
+            info.position.y = position.getFloat("y");
+            CJsonT homePosition(player.getChild("homePosition"));
+            info.homePosition.x = homePosition.getFloat("x");
+            info.homePosition.y = homePosition.getFloat("y");
+            info.aiClass = player.getInt("aiClass");
+            
+            m_match->addPlayer(FBDefs::SIDE::LEFT, info);
+        }
+        
+        {
+            CJsonT player(right.get(i));
+            auto& card = info.card;
+            card.m_cardID = player.getUInt("pcId");
+            card.m_speed = player.getFloat("speed");
+            strncpy(card.m_icon, player.getString("icon"), FBDefs::MAX_CARD_ICON_LEN - 1);
+            card.m_strength = player.getFloat("strength");
+            card.m_dribbleSkill = player.getFloat("dribbleSkill");
+            card.m_passSkill = player.getFloat("passSkill");
+            card.m_shootSkill = player.getFloat("shootSkill");
+            card.m_defenceSkill = player.getFloat("defenceSkill");
+            card.m_attackSkill = player.getFloat("attackSkill");
+            card.m_groundSkill = player.getFloat("groundSkill");
+            card.m_airSkill = player.getFloat("airSkill");
+            CJsonT position(player.getChild("position"));
+            info.position.x = position.getFloat("x");
+            info.position.y = position.getFloat("y");
+            CJsonT homePosition(player.getChild("homePosition"));
+            info.homePosition.x = homePosition.getFloat("x");
+            info.homePosition.y = homePosition.getFloat("y");
+            info.aiClass = player.getInt("aiClass");
+            
+            m_match->addPlayer(FBDefs::SIDE::RIGHT, info);
+        }
+
+    }
+    
+    
+    m_match->matchInfoAck(side, kickOffSide, kickOffPlayer);
+    
+    m_startStep = START_STEP::NONE;
+    const char *route = "match.matchHandler.ready";
+    CJsonT msg;
+    POMELO->notify(route, msg, [](Node* node, void* resp){
+    });
+    msg.release();
+}
+
+
+
+void CFBMatchProxyNet::onInstructionDone(Node*, void* r)
+{
+    m_match->instructionAck(0);
+}
+
+
+
+void CFBMatchProxyNet::onResumeMatch(Node*, void* r)
+{
+    m_match->resumeMatch();
+}

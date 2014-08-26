@@ -13,6 +13,14 @@ constVar = {
         matchInsructionMovieEnd = "match.matchHandler.instructionMovieEnd",
         matchGetInfo = "match.matchHandler.getMatchInfo",
         matchSyncTime = "match.matchHandler.time",
+
+        pushSync = "sync",
+        pushStartMatch = "startMatch",
+        pushEndMatch = "endMatch",
+        pushTriggerMenu = "triggerMenu",
+        pushInstructions = "instructions",
+        pushInstructionsDone = "instructionsDone",
+        pushResumeMatch = "resumeMatch",
     },
     
     Sys = {
