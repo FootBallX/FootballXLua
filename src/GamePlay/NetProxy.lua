@@ -205,40 +205,24 @@ function NetProxy:onInstructionResult(msg)
     
     local msgJson = json.decode(msg);
     
-    CJsonTArray ja(docs.getChild("instructions"));
-    for (size_t i = 0; i < ja.size(); ++i)
-    
-        local ins = ja.get(i);
-        res.instructions.push_back(
-                                   CFBInstructionResult.InsStructure(
-                                                                      ins.getInt("side"),
-                                                                      ins.getInt("playerNumber"),
-                                                                      ins.getInt("ins"),
-                                                                      ins.getInt("result")
-                                                                      )
-                                   );
-        
+    local ja = msgJson.instructions;
+    for local i = 1, #ja do    
+        local ins = ja[i];
+        res.instructions:pushIns(ins.side, ins.playerNumber, ins.ins, ins.result);
+
         local insStru = res.instructions[i];
         
-        CJsonTArray animsJson(ins.getChild("animations"));
-        for (size_t j = 0; j < animsJson.size(); ++j)
-        
-            local animObj = animsJson.get(j);
-            insStru.animations.push_back(
-                                         CFBInstructionResult
-                                         .InsStructure
-                                         .Animation(
-                                                     animObj.getInt("animId"),
-                                                     animObj.getFloat("delay")
-                                                     )
-                                         );
+        local animsJson = ins.animations;
+        for local j = 1, #animsJson do
+            local animObj = animsJson[j];
+            insStru:pushAnim(animObj.animId, animObj.delay);
         end
     end
     
-    res.ballSide = docs.getInt("ballSide");
-    res.playerNumber = docs.getInt("playerNumber");
-    res.ballPosX = docs.getFloat("ballPosX");
-    res.ballPosY = docs.getFloat("ballPosY");
+    res.ballSide = msgJson.ballSide;
+    res.playerNumber = msgJson.playerNumber;
+    res.ballPosX = msgJson.ballPosX;
+    res.ballPosY = msgJson.ballPosY;
     
     self.m_match:instructionResultAck();
 end
@@ -246,21 +230,18 @@ end
 
 
 function NetProxy:onGetMatchInfo(msg)
-
-    CCPomeloReponse* ccpomeloresp = (CCPomeloReponse*)r;
-    CJsonT docs(ccpomeloresp:docs);
+    local msgJson = json.decode(msg);
     
-    CJsonTArray left(docs.getChild("left"));
-    CJsonTArray right(docs.getChild("right"));
+    local left = msgJson.left;
+    local right = msgJson.right;
 
-    unsigned local u1 = docs.getUInt("leftUid");
-    unsigned local u2 = docs.getUInt("rightUid");
+    local u1 = msgJson.leftUid;
+    local u2 = msgJson.rightUid;
     
-    matchDefs.SIDE side = matchDefs.SIDE.NONE;
-    matchDefs.SIDE kickOffSide = matchDefs.SIDE.LEFT;
+    local side = matchDefs.SIDE.NONE;
+    local kickOffSide = matchDefs.SIDE.LEFT;
     
     if (u1 == PLAYER_INFO:getUID())
-    
         side = matchDefs.SIDE.LEFT;
     end
     else if (u2 == PLAYER_INFO:getUID())

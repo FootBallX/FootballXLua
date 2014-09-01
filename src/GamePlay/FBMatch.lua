@@ -6,6 +6,7 @@ require "GameDatas"
 require "GamePlay.MatchDefs"
 require "GamePlay.FBPitch"
 
+
 local SIDE =
 {
     "SELF",       -- 自己
@@ -55,7 +56,7 @@ function MatchManager:ctor()
     self.m_targetPlayerId = -1; --     int m_targetPlayerId = -1;       // 仅传球时候有效，传球对象\'',
     self.m_playAnimIndex = 0; --     int m_playAnimIndex = 0;',
     self.m_SYNC_TIME = 1.0; --     const float m_SYNC_TIME = 1.0f;',
-    self.m_instructionResult = nil; --     CFBInstructionResult m_instructionResult;',
+    self.m_instructionResult = require("GamePlay.FBInstructionResult").new(); --     CFBInstructionResult m_instructionResult;',
     self.m_teamsInMatch = {}; HDVector.extend(self.m_teamsInMatch); --     CFBTeam* m_teamsInMatch[(int)SIDE::NONE];       // 这里重新组织一下，按照己方和对方保存team',
     self.m_syncTime = {}; HDVector.extend(self.m_syncTime); --     float m_syncTime[(int)SIDE::NONE];',
     self.m_startTime = 0; --     unsigned int m_startTime = 0;',
