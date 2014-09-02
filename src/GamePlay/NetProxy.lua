@@ -3,10 +3,11 @@ require "Cocos2dConstants"
 require "Common"
 require "constVar"
 require "GameDatas"
+require "GameElement.PlayerInfo"
 
 local NetProxy = class("NetProxy")
-
 local pomelo = PomeloClient:getInstance()
+local PLAYER_INFO = g_PlayerInfo;
 
 local START_STEP =
 {
@@ -43,6 +44,8 @@ function NetProxy:init()
             self:onInstructionDone(msg);
         elseif (event == constVar.Event.pushResumeMatch) then
             self:onResumeMatch(msg);
+        elseif (event == constVar.Event.matchGetInfo) then
+            self:onGetMatchInfo(msg);
         end
     end
 
@@ -206,14 +209,14 @@ function NetProxy:onInstructionResult(msg)
     local msgJson = json.decode(msg);
     
     local ja = msgJson.instructions;
-    for local i = 1, #ja do    
+    for i = 1, #ja do    
         local ins = ja[i];
         res.instructions:pushIns(ins.side, ins.playerNumber, ins.ins, ins.result);
 
         local insStru = res.instructions[i];
         
         local animsJson = ins.animations;
-        for local j = 1, #animsJson do
+        for j = 1, #animsJson do
             local animObj = animsJson[j];
             insStru:pushAnim(animObj.animId, animObj.delay);
         end
@@ -241,92 +244,73 @@ function NetProxy:onGetMatchInfo(msg)
     local side = matchDefs.SIDE.NONE;
     local kickOffSide = matchDefs.SIDE.LEFT;
     
-    if (u1 == PLAYER_INFO:getUID())
+    if (u1 == PLAYER_INFO.m_uid) then
         side = matchDefs.SIDE.LEFT;
-    end
-    else if (u2 == PLAYER_INFO:getUID())
-    
+    elseif (u2 == PLAYER_INFO.m_uid) then
         side = matchDefs.SIDE.RIGHT;
     end
-    else
     
-        CC_ASSERT(false);
-    end
-    
-    if ( 1 == docs.getInt("kickOffSide"))
-    
+    if ( 1 == msgJson.kickOffSide) then
         kickOffSide = matchDefs.SIDE.RIGHT;
     end
     
-    local kickOffPlayer = docs.getInt("kickOffPlayer");
+    local kickOffPlayer = msgJson.kickOffPlayer;
     
-    local size = (local)left.size();
-    CC_ASSERT(size == right.size());
+    local size = #left;
     
-    CFBPlayerInitInfo info;
-    for (local i = 0; i < size; ++i)
-    
+    local info = {card : require("GameElement.Card").new()};
+    for  i = 1, size do
+        local player = left[i];
+        local card = info.card;
+        card.m_cardID = player.pcId;
+        card.m_speed = player.speed;
+        card.m_icon = player.icon;
+        card.m_strength = player.strength;
+        card.m_dribbleSkill = player.dribbleSkill;
+        card.m_passSkill = player.passSkill;
+        card.m_shootSkill = player.shootSkill;
+        card.m_defenceSkill = player.defenceSkill;
+        card.m_attackSkill = player.attackSkill;
+        card.m_groundSkill = player.groundSkill;
+        card.m_airSkill = player.airSkill;
+        local position = player.position;
+        info.position = cc.p(position.x, position.y);
+        local homePosition = player.homePosition;
+        info.homePosition = cc.p(homePosition.x, homePosition.y);
+        info.aiClass = player.aiClass;
         
-            CJsonT player(left.get(i));
-            local card = info.card;
-            card.self.m_cardID = player.getUInt("pcId");
-            card.self.m_speed = player.getFloat("speed");
-            strncpy(card.self.m_icon, player.getString("icon"), matchDefs.MAX_CARD_ICON_LEN - 1);
-            card.self.m_strength = player.getFloat("strength");
-            card.self.m_dribbleSkill = player.getFloat("dribbleSkill");
-            card.self.m_passSkill = player.getFloat("passSkill");
-            card.self.m_shootSkill = player.getFloat("shootSkill");
-            card.self.m_defenceSkill = player.getFloat("defenceSkill");
-            card.self.m_attackSkill = player.getFloat("attackSkill");
-            card.self.m_groundSkill = player.getFloat("groundSkill");
-            card.self.m_airSkill = player.getFloat("airSkill");
-            CJsonT position(player.getChild("position"));
-            info.position.x = position.getFloat("x");
-            info.position.y = position.getFloat("y");
-            CJsonT homePosition(player.getChild("homePosition"));
-            info.homePosition.x = homePosition.getFloat("x");
-            info.homePosition.y = homePosition.getFloat("y");
-            info.aiClass = player.getInt("aiClass");
-            
-            self.m_match:addPlayer(matchDefs.SIDE.LEFT, info);
-        end
-        
-        
-            CJsonT player(right.get(i));
-            local card = info.card;
-            card.self.m_cardID = player.getUInt("pcId");
-            card.self.m_speed = player.getFloat("speed");
-            strncpy(card.self.m_icon, player.getString("icon"), matchDefs.MAX_CARD_ICON_LEN - 1);
-            card.self.m_strength = player.getFloat("strength");
-            card.self.m_dribbleSkill = player.getFloat("dribbleSkill");
-            card.self.m_passSkill = player.getFloat("passSkill");
-            card.self.m_shootSkill = player.getFloat("shootSkill");
-            card.self.m_defenceSkill = player.getFloat("defenceSkill");
-            card.self.m_attackSkill = player.getFloat("attackSkill");
-            card.self.m_groundSkill = player.getFloat("groundSkill");
-            card.self.m_airSkill = player.getFloat("airSkill");
-            CJsonT position(player.getChild("position"));
-            info.position.x = position.getFloat("x");
-            info.position.y = position.getFloat("y");
-            CJsonT homePosition(player.getChild("homePosition"));
-            info.homePosition.x = homePosition.getFloat("x");
-            info.homePosition.y = homePosition.getFloat("y");
-            info.aiClass = player.getInt("aiClass");
-            
-            self.m_match:addPlayer(matchDefs.SIDE.RIGHT, info);
-        end
+        self.m_match:addPlayer(matchDefs.SIDE.LEFT, info);
 
+        
+        
+        player = right[i];
+        card.m_cardID = player.pcId;
+        card.m_speed = player.speed;
+        card.m_icon =  player.icon;
+        card.m_strength = player.strength;
+        card.m_dribbleSkill = player.dribbleSkill;
+        card.m_passSkill = player.passSkill;
+        card.m_shootSkill = player.shootSkill;
+        card.m_defenceSkill = player.defenceSkill;
+        card.m_attackSkill = player.attackSkill;
+        card.m_groundSkill = player.groundSkill;
+        card.m_airSkill = player.airSkill;
+        position = player.position;
+        info.position = cc.p(position.x, position.y);
+        homePosition = player.homePosition;
+        info.homePosition = cc.p(homePosition.x, homePosition.y);
+        info.aiClass = player.aiClass;
+        
+        self.m_match:addPlayer(matchDefs.SIDE.RIGHT, info);
     end
     
     
     self.m_match:matchInfoAck(side, kickOffSide, kickOffPlayer);
     
     self.m_startStep = START_STEP.NONE;
-    const char *route = "match.matchHandler.ready";
-    CJsonT msg;
-    POMELO:notify(route, msg, [](Node* node, void* resp)
-    end);
-    msg.release();
+
+    pomelo:notify(constVar.Event.matchHandlerReady, "");
+
 end
 
 

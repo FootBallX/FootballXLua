@@ -21,6 +21,8 @@ constVar = {
         pushInstructions = "instructions",
         pushInstructionsDone = "instructionsDone",
         pushResumeMatch = "resumeMatch",
+
+        matchHandlerReady = "match.matchHandler.ready",
     },
     
     Sys = {

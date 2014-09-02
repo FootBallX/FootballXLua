@@ -10,7 +10,9 @@ var FileList = [
 	{lua:['../src/GamePlay/FBTeam.lua'], cpp:['../../Classes/CFBTeam.h']},
 	{lua:['../src/GamePlay/NetProxy.lua'], cpp:['../../Classes/CFBMatchProxy.h', '../../Classes/CFBMatchProxyNet.h']},
 	{lua:['../src/GamePlay/SyncedTime.lua'], cpp:['../../Classes/CSyncedTime.h']},
-	{lua:['../src/GamePlay/FBInstructionResult.lua'], cpp:['../../Classes/CFBInstructionResult.h']}
+	{lua:['../src/GamePlay/FBInstructionResult.lua'], cpp:['../../Classes/CFBInstructionResult.h']},
+	{lua:['../src/GameElement/Playerinfo.lua'], cpp:['../../Classes/CPlayerInfo.h']},
+	{lua:['../src/GameElement/Card.lua'], cpp:['../../Classes/CFBCard.h']}
 ];
 
 
@@ -33,8 +35,8 @@ function getVarNameFromCPP(l){
 	l = l.replace(/\/\/.*/, "");
 	l = trim(l);
 
-	// var regExp = /\b(m_\w+).*;$/;
-	var regExp = /\s(\w+)\s*(;|=\s*.+;)/
+	var regExp = /\b(m_\w+).*;$/;
+	// var regExp = /\s(\w+)\s*(;|=\s*.+;)/
 	var ret = l.match(regExp);
 	if (ret !== null)
 	{

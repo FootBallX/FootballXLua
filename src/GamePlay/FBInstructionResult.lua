@@ -10,8 +10,8 @@ local MD = MatchDefs;
 
 local FBInstructionResult = class("FBInstructionResult");
 
-local FBInstructionResult.Animation = class("Animation");
-local FBInstructionResult.InsStructure = class("InsStructure");
+FBInstructionResult.Animation = class("Animation");
+FBInstructionResult.InsStructure = class("InsStructure");
 
 function FBInstructionResult.Animation:ctor(a, d)
 	self.aniId = a;		--             int aniId;',
